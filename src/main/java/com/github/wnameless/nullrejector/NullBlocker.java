@@ -22,6 +22,11 @@ package com.github.wnameless.nullrejector;
 
 import java.lang.reflect.Method;
 
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.NotFoundException;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -49,7 +54,7 @@ public final class NullBlocker implements MethodInterceptor {
     Class<?> klass = m.getDeclaringClass();
     Class<?>[] argTypes = m.getParameterTypes();
     Object[] args = invocation.getArguments();
-    String msgSuffix = buildSuffix(m);
+    String msgSuffix = buildSuffix(m, argTypes);
 
     // Object#equals is always ignored
     if (argTypes.length == 1 && m.getName().equals("equals")
@@ -85,9 +90,22 @@ public final class NullBlocker implements MethodInterceptor {
     return invocation.proceed();
   }
 
-  private String buildSuffix(Method m) {
+  private String buildSuffix(Method m, Class<?>[] argTypes) {
+    ClassPool pool = ClassPool.getDefault();
+    int lineNum = 1;
+    CtMethod method;
+    try {
+      CtClass cc = pool.get(m.getDeclaringClass().getName());
+      CtClass[] ctClasses = new CtClass[argTypes.length];
+      for (int i = 0; i < ctClasses.length; i++) {
+        ctClasses[i] = pool.get(argTypes[i].getName());
+      }
+      method = cc.getDeclaredMethod(m.getName(), ctClasses);
+      lineNum = method.getMethodInfo().getLineNumber(0) - 1;
+    } catch (NotFoundException e) {}
     return "\n\tat " + m.getDeclaringClass().getName() + "." + m.getName()
-        + "(" + m.getDeclaringClass().getSimpleName() + ".java:1)";
+        + "(" + m.getDeclaringClass().getSimpleName() + ".java:" + lineNum
+        + ")";
   }
 
   private void preventNulls(Object[] arguments, Class<?>[] argTypes,

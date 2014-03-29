@@ -20,26 +20,11 @@
  */
 package com.github.wnameless.nullrejector;
 
-import static com.github.wnameless.nullrejector.NullRejector.nullProof;
+import com.github.wnameless.nullrejector.annotation.RejectNull;
 
-public class Foo {
+@RejectNull
+public class AnnotatedFoo {
 
-  public void method1(String s) {
-    method2(null);
-  }
-
-  private void method2(String s) {}
-
-  public void method3(String s) {
-    method2(null);
-  }
-
-  public void method4(String s) {
-    method2(null);
-  }
-
-  public static void main(String[] arg) {
-    nullProof(Foo.class).method1(null);
-  }
+  public void method1(String s) {}
 
 }
