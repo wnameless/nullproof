@@ -20,24 +20,45 @@
  */
 package com.github.wnameless.nullrejector.annotation;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * 
+ * {@link Argument} can be only used in {@link RejectNull} annotation. It
+ * describes the detail actions while any null object is found by
+ * {@link RejectNull}.
+ *
+ */
 @Retention(RUNTIME)
-@Target({ TYPE, METHOD })
-public @interface ShowSuffix {
+@Target({ ANNOTATION_TYPE, METHOD })
+public @interface Argument {
 
   /**
-   * Because of the AOP, the position of NullPointerException raised is
-   * misplaced. Appending additional information of the method which contains
-   * null arguments to the error message is very helpful for debug purpose.
+   * The target Class of arguments.
    * 
-   * @return true if a suffix is append to error message, false otherwise
+   * @return any Class
    */
-  boolean value() default true;
+  Class<?> type();
+
+  /**
+   * The exception message is used while a NullPointerException is raised on
+   * null arguments of target Class.
+   * 
+   * @return a String
+   */
+  String message() default "";
+
+  /**
+   * Option to suppress the NullPointerException of target Class.
+   * 
+   * @return true if the NullPointerException of target Class is ignored, false
+   *         otherwise
+   */
+  boolean ignore() default false;
 
 }

@@ -31,9 +31,8 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import com.github.wnameless.nullrejector.annotation.AcceptNull;
-import com.github.wnameless.nullrejector.annotation.Error;
+import com.github.wnameless.nullrejector.annotation.Argument;
 import com.github.wnameless.nullrejector.annotation.RejectNull;
-import com.github.wnameless.nullrejector.annotation.ShowSuffix;
 
 /**
  * 
@@ -43,18 +42,17 @@ import com.github.wnameless.nullrejector.annotation.ShowSuffix;
  */
 public final class NullBlocker implements MethodInterceptor {
 
-  private static final int REGULAR_ERROR = -1;
-  private static final int NO_ERROR = Integer.MIN_VALUE;
+  private static final int REGULAR_EXCEPTION = -1;
+  private static final int NO_EXCEPTION = Integer.MIN_VALUE;
 
-  private static final Error[] emptyErrorAry = new Error[0];
-  private static final String[] emptyStrAry = new String[0];
+  private static final Argument[] emptyArgumentAry = new Argument[0];
+  private static final String[] emptyStringAry = new String[0];
 
   public Object invoke(MethodInvocation invocation) throws Throwable {
     Method m = invocation.getMethod();
     Class<?> klass = m.getDeclaringClass();
     Class<?>[] argTypes = m.getParameterTypes();
     Object[] args = invocation.getArguments();
-    String msgSuffix = buildSuffix(m, argTypes);
 
     // Object#equals is always ignored
     if (argTypes.length == 1 && m.getName().equals("equals")
@@ -65,37 +63,35 @@ public final class NullBlocker implements MethodInterceptor {
     if (methodAN != null)
       return invocation.proceed();
 
-    RejectNull methodPN = m.getAnnotation(RejectNull.class);
-    ShowSuffix methodSS = m.getAnnotation(ShowSuffix.class);
-    if (methodPN != null) {
-      preventNulls(args, argTypes, methodPN.value(), msgSuffix,
-          methodSS == null ? true : methodSS.value());
+    RejectNull methodRN = m.getAnnotation(RejectNull.class);
+    if (methodRN != null) {
+      preventNulls(m, args, methodRN.value());
       return invocation.proceed();
     }
 
     AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
-    RejectNull classPN = klass.getAnnotation(RejectNull.class);
-    ShowSuffix classSS =
-        methodSS != null ? methodSS : klass.getAnnotation(ShowSuffix.class);
-    if (classPN == null) {
-      Error[] errors = emptyErrorAry;
-      preventNulls(args, argTypes, errors, msgSuffix, true);
+    RejectNull classRN = klass.getAnnotation(RejectNull.class);
+    if (classRN == null) {
+      Argument[] arguments = emptyArgumentAry;
+      preventNulls(m, args, arguments);
     } else {
-      String[] exceptions = classAN == null ? emptyStrAry : classAN.value();
+      String[] exceptions = classAN == null ? emptyStringAry : classAN.value();
       if (notFoundIn(exceptions, m.getName()))
-        preventNulls(args, argTypes, classPN.value(), msgSuffix,
-            classSS == null ? true : classSS.value());
+        preventNulls(m, args, classRN.value());
     }
 
     return invocation.proceed();
   }
 
-  private String buildSuffix(Method m, Class<?>[] argTypes) {
+  private String buildSuffix(Method m) {
+    Class<?>[] argTypes = m.getParameterTypes();
+    Class<?> klass = m.getDeclaringClass();
+
     ClassPool pool = ClassPool.getDefault();
     int lineNum = 1;
     CtMethod method;
     try {
-      CtClass cc = pool.get(m.getDeclaringClass().getName());
+      CtClass cc = pool.get(klass.getName());
       CtClass[] ctClasses = new CtClass[argTypes.length];
       for (int i = 0; i < ctClasses.length; i++) {
         ctClasses[i] = pool.get(argTypes[i].getName());
@@ -103,24 +99,25 @@ public final class NullBlocker implements MethodInterceptor {
       method = cc.getDeclaredMethod(m.getName(), ctClasses);
       lineNum = method.getMethodInfo().getLineNumber(0) - 1;
     } catch (NotFoundException e) {}
-    return "\n\tat " + m.getDeclaringClass().getName() + "." + m.getName()
-        + "(" + m.getDeclaringClass().getSimpleName() + ".java:" + lineNum
-        + ")";
+
+    return "\n\tat " + klass.getName() + "." + m.getName() + "("
+        + klass.getSimpleName() + ".java:" + lineNum + ")";
   }
 
-  private void preventNulls(Object[] arguments, Class<?>[] argTypes,
-      Error[] errors, String msgSuffix, boolean hasSuffix) {
+  private void preventNulls(Method m, Object[] args, Argument[] arguments) {
+    Class<?>[] argTypes = m.getParameterTypes();
+
     for (int i = 0; i < argTypes.length; i++) {
-      Object arg = arguments[i];
+      Object arg = args[i];
       Class<?> type = argTypes[i];
-      int errorType = checkErrorType(errors, arg, type);
-      if (errorType == NO_ERROR)
+      int exceptionType = checkExceptionType(arguments, arg, type);
+      if (exceptionType == NO_EXCEPTION)
         continue;
-      else if (errorType == REGULAR_ERROR)
-        throw new NullPointerException(hasSuffix ? msgSuffix : "");
+      else if (exceptionType == REGULAR_EXCEPTION)
+        throw new NullPointerException(buildSuffix(m));
       else
-        throw new NullPointerException(errors[errorType].message()
-            + (hasSuffix ? msgSuffix : ""));
+        throw new NullPointerException(arguments[exceptionType].message()
+            + buildSuffix(m));
     }
   }
 
@@ -132,24 +129,22 @@ public final class NullBlocker implements MethodInterceptor {
     return true;
   }
 
-  private static int checkErrorType(Error[] errors, Object arg, Class<?> klass) {
+  private static int checkExceptionType(Argument[] arguments, Object arg,
+      Class<?> klass) {
     if (arg != null)
-      return NO_ERROR;
+      return NO_EXCEPTION;
 
-    if (errors.length == 0)
-      return REGULAR_ERROR;
-
-    for (int i = 0; i < errors.length; i++) {
-      Error e = errors[i];
-      if (e.of().equals(klass)) {
-        if (e.ignore())
-          return NO_ERROR;
+    for (int i = 0; i < arguments.length; i++) {
+      Argument a = arguments[i];
+      if (a.type().equals(klass)) {
+        if (a.ignore())
+          return NO_EXCEPTION;
         else
           return i;
       }
     }
 
-    return REGULAR_ERROR;
+    return REGULAR_EXCEPTION;
   }
 
 }

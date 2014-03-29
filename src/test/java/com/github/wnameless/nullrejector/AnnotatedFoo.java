@@ -20,11 +20,20 @@
  */
 package com.github.wnameless.nullrejector;
 
+import com.github.wnameless.nullrejector.annotation.AcceptNull;
+import com.github.wnameless.nullrejector.annotation.Argument;
 import com.github.wnameless.nullrejector.annotation.RejectNull;
 
-@RejectNull
+@RejectNull(@Argument(type = String.class, message = "Oop!", ignore = false))
+@AcceptNull({ "bar1", "bar2" })
 public class AnnotatedFoo {
 
-  public void method1(String s) {}
+  @RejectNull(@Argument(type = String.class))
+  @AcceptNull
+  public void bar(String s) {}
+
+  public void bar1(String s) {}
+
+  public void bar2(String s) {}
 
 }

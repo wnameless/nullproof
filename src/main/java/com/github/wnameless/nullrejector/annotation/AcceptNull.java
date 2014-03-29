@@ -27,13 +27,23 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.github.wnameless.nullrejector.NullRejector;
+
+/**
+ * 
+ * {@link AcceptNull} can be used to let {@link NullRejector} ignore certain
+ * methods. It can be annotated both on Type and Method, but the value only
+ * takes effect when it is on a Type, otherwise it ignores the annotated Method
+ * directly.
+ *
+ */
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
 public @interface AcceptNull {
 
   /**
-   * Names of methods to be ignored. It works only if it is annotated on a class
-   * not a method.
+   * Names of methods to be ignored. It takes effect only if it is annotated on
+   * a Type not a Method.
    * 
    * @return a String array
    */
