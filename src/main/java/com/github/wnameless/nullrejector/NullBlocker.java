@@ -44,7 +44,6 @@ public final class NullBlocker implements MethodInterceptor {
   private static final Error[] emptyErrorAry = new Error[0];
   private static final String[] emptyStrAry = new String[0];
 
-  @Override
   public Object invoke(MethodInvocation invocation) throws Throwable {
     Method m = invocation.getMethod();
     Class<?> klass = m.getDeclaringClass();
