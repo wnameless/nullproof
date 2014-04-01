@@ -20,7 +20,6 @@
  */
 package com.github.wnameless.nullrejector;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,18 +29,18 @@ import com.google.inject.TypeLiteral;
 
 public final class NullProof {
 
-  public static class ConstructHelper<E> {
+  public static class Constructor<E> {
 
     private final Class<E> klass;
     private final List<TypeLiteral<?>> typeLiterals =
         new ArrayList<TypeLiteral<?>>();
     private final List<Object> arguments = new ArrayList<Object>();
 
-    public ConstructHelper(Class<E> klass) {
+    public Constructor(Class<E> klass) {
       this.klass = klass;
     }
 
-    public <T> ConstructHelper<E> typedArgument(TypeLiteral<T> typeLiteral, T arg) {
+    public <T> Constructor<E> typedArgument(TypeLiteral<T> typeLiteral, T arg) {
       typeLiterals.add(typeLiteral);
       arguments.add(arg);
       return this;
@@ -52,12 +51,12 @@ public final class NullProof {
       return new ArgumentHolder<E>(this);
     }
 
-    private <T> ConstructHelper<E> addArgument(T argument) {
+    private <T> Constructor<E> addArgument(T argument) {
       arguments.add(argument);
       return this;
     }
 
-    public E instantiate() {
+    public E make() {
       return nullProof(klass,
           typeLiterals.toArray(new TypeLiteral[typeLiterals.size()]),
           arguments.toArray());
@@ -67,13 +66,13 @@ public final class NullProof {
 
   public static class TypeLiteralHolder<E> {
 
-    private final ConstructHelper<E> builder;
+    private final Constructor<E> builder;
 
-    public TypeLiteralHolder(ConstructHelper<E> builder) {
+    public TypeLiteralHolder(Constructor<E> builder) {
       this.builder = builder;
     }
 
-    public <T> ConstructHelper<E> addArgument(T argument) {
+    public <T> Constructor<E> addArgument(T argument) {
       return builder.addArgument(argument);
     }
 
@@ -81,13 +80,13 @@ public final class NullProof {
 
   public static class ArgumentHolder<E> {
 
-    private final ConstructHelper<E> builder;
+    private final Constructor<E> builder;
 
-    public ArgumentHolder(ConstructHelper<E> builder) {
+    public ArgumentHolder(Constructor<E> builder) {
       this.builder = builder;
     }
 
-    public <T> ConstructHelper<E> addArgument(T argument) {
+    public <T> Constructor<E> addArgument(T argument) {
       return builder.addArgument(argument);
     }
 
@@ -137,7 +136,7 @@ public final class NullProof {
       @Override
       protected void configure() {
         Class<?>[] paramTypes = new Class<?>[0];
-        for (Constructor<?> ct : klass.getConstructors()) {
+        for (java.lang.reflect.Constructor<?> ct : klass.getConstructors()) {
           boolean involkable = true;
           paramTypes = ct.getParameterTypes();
           if (paramTypes.length == args.length) {

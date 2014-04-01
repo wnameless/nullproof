@@ -45,9 +45,9 @@ public class Foo {
 
   public static void main(String[] arg) {
     Foo foo =
-        new NullProof.ConstructHelper<Foo>(Foo.class)
+        new NullProof.Constructor<Foo>(Foo.class)
             .forType(new TypeLiteral<Map<String, Integer>>() {})
-            .addArgument(new HashMap<String, Integer>()).instantiate();
+            .addArgument(new HashMap<String, Integer>()).make();
 
     foo.method1(null);
   }
