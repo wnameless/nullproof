@@ -18,11 +18,12 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector;
+package com.github.wnameless.nullproof;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.wnameless.nullproof.NullProof;
 import com.google.inject.TypeLiteral;
 
 public class Foo {

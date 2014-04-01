@@ -18,9 +18,9 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector;
+package com.github.wnameless.nullproof;
 
-import static com.github.wnameless.nullrejector.NullProof.nullProof;
+import static com.github.wnameless.nullproof.NullProof.nullProof;
 
 import org.junit.Before;
 import org.junit.Test;

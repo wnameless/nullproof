@@ -18,23 +18,22 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector;
+package com.github.wnameless.nullproof;
 
-import static com.google.inject.matcher.Matchers.any;
+import com.github.wnameless.nullproof.annotation.AcceptNull;
+import com.github.wnameless.nullproof.annotation.Argument;
+import com.github.wnameless.nullproof.annotation.RejectNull;
 
-import com.google.inject.AbstractModule;
+@RejectNull(@Argument(type = String.class, message = "Oop!", ignore = false))
+@AcceptNull({ "bar1", "bar2" })
+public class AnnotatedFoo {
 
-/**
- * 
- * NullRejector is a Guice module designed for preventing null objects from
- * method calls by AOP programming.
- * 
- */
-public class NullRejector extends AbstractModule {
+  @RejectNull(@Argument(type = String.class))
+  @AcceptNull
+  public void bar(String s) {}
 
-  @Override
-  protected void configure() {
-    bindInterceptor(any(), any(), new NullBlocker());
-  }
+  public void bar1(String s) {}
+
+  public void bar2(String s) {}
 
 }

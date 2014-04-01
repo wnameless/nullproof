@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector.annotation;
+package com.github.wnameless.nullproof.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
@@ -27,26 +27,25 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.github.wnameless.nullrejector.NullRejector;
+import com.github.wnameless.nullproof.NullRejector;
 
 /**
  * 
- * {@link AcceptNull} can be used to let {@link NullRejector} ignore certain
- * methods. It can be annotated both on Type and Method, but the value only
- * takes effect when it is on a Type, otherwise it ignores the annotated Method
- * directly.
- * 
+ * {@link RejectNull} can be used with {@link NullRejector} and automatically
+ * check all arguments of method calls. It raises NullPointerException if any
+ * null object is found. This annotation should use with
+ * {@link NullRejector#nullProof} for AOP purpose.
+ *
  */
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
-public @interface AcceptNull {
+public @interface RejectNull {
 
   /**
-   * Names of methods to be ignored. It takes effect only if it is annotated on
-   * a Type not a Method.
+   * The detail actions can be described by Error annotations.
    * 
-   * @return a String array
+   * @return an Error array
    */
-  String[] value() default {};
+  Argument[] value() default {};
 
 }

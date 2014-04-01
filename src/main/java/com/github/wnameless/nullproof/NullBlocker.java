@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector;
+package com.github.wnameless.nullproof;
 
 import java.lang.reflect.Method;
 
@@ -30,9 +30,9 @@ import javassist.NotFoundException;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
-import com.github.wnameless.nullrejector.annotation.AcceptNull;
-import com.github.wnameless.nullrejector.annotation.Argument;
-import com.github.wnameless.nullrejector.annotation.RejectNull;
+import com.github.wnameless.nullproof.annotation.AcceptNull;
+import com.github.wnameless.nullproof.annotation.Argument;
+import com.github.wnameless.nullproof.annotation.RejectNull;
 
 /**
  * 

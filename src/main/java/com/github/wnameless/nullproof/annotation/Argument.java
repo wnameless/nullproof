@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector.annotation;
+package com.github.wnameless.nullproof.annotation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.METHOD;

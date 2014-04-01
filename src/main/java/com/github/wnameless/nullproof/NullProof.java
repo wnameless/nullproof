@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package com.github.wnameless.nullrejector;
+package com.github.wnameless.nullproof;
 
 import java.util.ArrayList;
 import java.util.List;
