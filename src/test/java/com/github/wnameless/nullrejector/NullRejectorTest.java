@@ -20,7 +20,7 @@
  */
 package com.github.wnameless.nullrejector;
 
-import static com.github.wnameless.nullrejector.NullRejector.nullProof;
+import static com.github.wnameless.nullrejector.NullProof.nullProof;
 
 import org.junit.Before;
 import org.junit.Test;

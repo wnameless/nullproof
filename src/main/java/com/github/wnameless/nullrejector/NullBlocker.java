@@ -38,7 +38,7 @@ import com.github.wnameless.nullrejector.annotation.RejectNull;
  * 
  * NullBlocker is a Guice interceptor for raising a NullPointerException if any
  * null object is found on arguments of the called method.
- *
+ * 
  */
 public final class NullBlocker implements MethodInterceptor {
 
@@ -114,7 +114,8 @@ public final class NullBlocker implements MethodInterceptor {
       if (exceptionType == NO_EXCEPTION)
         continue;
       else if (exceptionType == REGULAR_EXCEPTION)
-        throw new NullPointerException(buildSuffix(m));
+        throw new NullPointerException("Parameter<" + type.getSimpleName()
+            + "> can be null" + buildSuffix(m));
       else
         throw new NullPointerException(arguments[exceptionType].message()
             + buildSuffix(m));

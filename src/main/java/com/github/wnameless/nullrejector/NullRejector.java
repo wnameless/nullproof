@@ -23,29 +23,14 @@ package com.github.wnameless.nullrejector;
 import static com.google.inject.matcher.Matchers.any;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * 
  * NullRejector is a Guice module designed for preventing null objects from
  * method calls by AOP programming.
- *
+ * 
  */
-public final class NullRejector extends AbstractModule {
-
-  /**
-   * Returns an instance of given Class which is prevented null objects by
-   * throwing NullPointerException from method calls.
-   * 
-   * @param klass
-   *          any non-final Class with non-private and zero-argument constructor
-   * @return a null proof instance of given class
-   */
-  public static <E> E nullProof(Class<E> klass) {
-    Injector injector = Guice.createInjector(new NullRejector());
-    return injector.getInstance(klass);
-  }
+public class NullRejector extends AbstractModule {
 
   @Override
   protected void configure() {

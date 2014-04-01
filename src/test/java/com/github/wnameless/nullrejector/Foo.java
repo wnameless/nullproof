@@ -20,9 +20,14 @@
  */
 package com.github.wnameless.nullrejector;
 
-import static com.github.wnameless.nullrejector.NullRejector.nullProof;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.inject.TypeLiteral;
 
 public class Foo {
+
+  public Foo(Map<String, Integer> map) {}
 
   public void method1(String s) {
     method2(null);
@@ -39,7 +44,12 @@ public class Foo {
   }
 
   public static void main(String[] arg) {
-    nullProof(Foo.class).method1(null);
+    Foo foo =
+        new NullProof.ConstructHelper<Foo>(Foo.class)
+            .forType(new TypeLiteral<Map<String, Integer>>() {})
+            .addArgument(new HashMap<String, Integer>()).instantiate();
+
+    foo.method1(null);
   }
 
 }

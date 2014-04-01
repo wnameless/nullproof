@@ -35,7 +35,7 @@ import com.github.wnameless.nullrejector.NullRejector;
  * methods. It can be annotated both on Type and Method, but the value only
  * takes effect when it is on a Type, otherwise it ignores the annotated Method
  * directly.
- *
+ * 
  */
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
