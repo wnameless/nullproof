@@ -20,6 +20,8 @@
  */
 package com.github.wnameless.nullproof;
 
+import java.util.Date;
+
 import com.github.wnameless.nullproof.annotation.AcceptNull;
 import com.github.wnameless.nullproof.annotation.Argument;
 import com.github.wnameless.nullproof.annotation.RejectNull;
@@ -35,6 +37,9 @@ public class AnnotatedFoo extends Foo {
   @Override
   public void barInteger(Integer i) {}
 
+  @RejectNull
+  public void barInteger2(Integer i) {}
+
   @Override
   public void barDouble(Double d) {}
 
@@ -48,5 +53,9 @@ public class AnnotatedFoo extends Foo {
 
   @RejectNull(@Argument(type = Number.class, message = "Noop!"))
   public void barNumber(Number n) {}
+
+  @RejectNull
+  @AcceptNull
+  public void barDate(Date d) {}
 
 }

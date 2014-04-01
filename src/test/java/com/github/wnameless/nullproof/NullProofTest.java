@@ -33,6 +33,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.testing.NullPointerTester;
+import com.google.inject.CreationException;
 import com.google.inject.TypeLiteral;
 
 public class NullProofTest {
@@ -64,6 +65,13 @@ public class NullProofTest {
     new NullProof.Constructor<Foo>(Foo.class)
         .forType(new TypeLiteral<Map<String, Integer>>() {})
         .addArgument(new HashMap<String, Integer>()).make();
+  }
+
+  @Test(expected = CreationException.class)
+  public void nullObjectCanNotBindTest() {
+    new NullProof.Constructor<Foo>(Foo.class)
+        .forType(new TypeLiteral<Map<String, Integer>>() {}).addArgument(null)
+        .make();
   }
 
   @Test
@@ -121,6 +129,16 @@ public class NullProofTest {
     } catch (NullPointerException ex) {
       assertTrue(ex.getMessage().startsWith("Noop!"));
     }
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void localRejectNullOverrideTest() {
+    annFoo.barInteger2(null);
+  }
+
+  @Test
+  public void acceptNullIsHigherThanRejectNullTest() {
+    annFoo.barDate(null);
   }
 
 }
