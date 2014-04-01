@@ -115,7 +115,7 @@ public final class NullBlocker implements MethodInterceptor {
         continue;
       else if (exceptionType == REGULAR_EXCEPTION)
         throw new NullPointerException("Parameter<" + type.getSimpleName()
-            + "> can be null" + buildSuffix(m));
+            + "> can't be null" + buildSuffix(m));
       else
         throw new NullPointerException(arguments[exceptionType].message()
             + buildSuffix(m));
