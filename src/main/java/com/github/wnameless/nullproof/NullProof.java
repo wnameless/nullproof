@@ -83,6 +83,11 @@ public final class NullProof {
       return this;
     }
 
+    /**
+     * Creates a null proof instance of given Class.
+     * 
+     * @return a null proof instance of given Class
+     */
     public E make() {
       return nullProof(klass,
           typeLiterals.toArray(new TypeLiteral[typeLiterals.size()]),
