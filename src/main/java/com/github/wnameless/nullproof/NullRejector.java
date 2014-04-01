@@ -26,8 +26,8 @@ import com.google.inject.AbstractModule;
 
 /**
  * 
- * NullRejector is a Guice module designed for preventing null objects from
- * method calls by AOP programming.
+ * {@link NullRejector} is a Guice module designed for preventing null arguments
+ * from method calls by AOP programming.
  * 
  */
 public class NullRejector extends AbstractModule {

@@ -27,8 +27,32 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.TypeLiteral;
 
+/**
+ * 
+ * NullProof protects any Object from null arguments. After the enhancement, a
+ * NullPointerException will raise automatically if any null argument is
+ * detected.
+ *
+ */
 public final class NullProof {
 
+  /**
+   * 
+   * {@link NullProof}.{@link Constructor} is a builder which is designed to
+   * make a null proof instance easier.
+   * 
+   * <P>
+   * For example:<br>
+   * 
+   * <pre>
+   * new NullProof.Constructor&lt;Foo&gt;(Foo.class)
+   *     .forType(new TypeLiteral&lt;Map&lt;String, Integer&gt;&gt;() {})
+   *     .addArgument(new HashMap&lt;String, Integer&gt;()).make();
+   * </pre>
+   *
+   * @param <E>
+   *          type of target Class
+   */
   public static class Constructor<E> {
 
     private final Class<E> klass;
@@ -36,14 +60,14 @@ public final class NullProof {
         new ArrayList<TypeLiteral<?>>();
     private final List<Object> arguments = new ArrayList<Object>();
 
+    /**
+     * Returns a {@link NullProof.Constructor}.
+     * 
+     * @param klass
+     *          Class of target object
+     */
     public Constructor(Class<E> klass) {
       this.klass = klass;
-    }
-
-    public <T> Constructor<E> typedArgument(TypeLiteral<T> typeLiteral, T arg) {
-      typeLiterals.add(typeLiteral);
-      arguments.add(arg);
-      return this;
     }
 
     public <T> ArgumentHolder<E> forType(TypeLiteral<T> typeLiteral) {
@@ -64,25 +88,11 @@ public final class NullProof {
 
   }
 
-  public static class TypeLiteralHolder<E> {
-
-    private final Constructor<E> builder;
-
-    public TypeLiteralHolder(Constructor<E> builder) {
-      this.builder = builder;
-    }
-
-    public <T> Constructor<E> addArgument(T argument) {
-      return builder.addArgument(argument);
-    }
-
-  }
-
   public static class ArgumentHolder<E> {
 
     private final Constructor<E> builder;
 
-    public ArgumentHolder(Constructor<E> builder) {
+    private ArgumentHolder(Constructor<E> builder) {
       this.builder = builder;
     }
 
@@ -93,17 +103,30 @@ public final class NullProof {
   }
 
   /**
-   * Returns an instance of given Class which is prevented null objects by
+   * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
    * @param klass
    *          any non-final Class with non-private and zero-argument constructor
-   * @return a null proof instance of given class
+   * @return a null proof instance of given Class
    */
   public static <E> E nullProof(Class<E> klass) {
     return Guice.createInjector(new NullRejector()).getInstance(klass);
   }
 
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls. This method handles
+   * complex generic and upcasting arguments of constructor.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param types
+   *          literal types of constructor parameters
+   * @param args
+   *          arguments of constructor
+   * @return a null proof instance of given Class
+   */
   public static <E> E nullProof(final Class<E> klass,
       final TypeLiteral<?>[] types, final Object... args) {
     return Guice.createInjector(new NullRejector(), new AbstractModule() {
@@ -115,11 +138,11 @@ public final class NullProof {
           bind((TypeLiteral<Object>) types[i]).toInstance((Object) args[i]);
         }
 
-        Class<?>[] paramTypes = new Class<?>[types.length];
-        for (int i = 0; i < types.length; i++) {
-          paramTypes[i] = types[i].getRawType();
-        }
         try {
+          Class<?>[] paramTypes = new Class<?>[types.length];
+          for (int i = 0; i < types.length; i++) {
+            paramTypes[i] = types[i].getRawType();
+          }
           bind(klass).toConstructor(klass.getConstructor(paramTypes));
         } catch (NoSuchMethodException e) {
           addError(e);
@@ -129,6 +152,17 @@ public final class NullProof {
     }).getInstance(klass);
   }
 
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls. This method only handles
+   * normal arguments of constructor without generic and upcasting.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param args
+   *          arguments of constructor
+   * @return a null proof instance of given Class
+   */
   public static <E> E nullProof(final Class<E> klass, final Object... args) {
     return Guice.createInjector(new NullRejector(), new AbstractModule() {
 
