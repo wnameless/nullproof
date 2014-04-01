@@ -24,16 +24,29 @@ import com.github.wnameless.nullproof.annotation.AcceptNull;
 import com.github.wnameless.nullproof.annotation.Argument;
 import com.github.wnameless.nullproof.annotation.RejectNull;
 
-@RejectNull(@Argument(type = String.class, message = "Oop!", ignore = false))
-@AcceptNull({ "bar1", "bar2" })
-public class AnnotatedFoo {
+@RejectNull({ @Argument(type = String.class, message = "Oop!"),
+    @Argument(type = Integer.class, ignore = true) })
+@AcceptNull("barDouble")
+public class AnnotatedFoo extends Foo {
 
-  @RejectNull(@Argument(type = String.class))
+  @Override
+  public void barString(String s) {}
+
+  @Override
+  public void barInteger(Integer i) {}
+
+  @Override
+  public void barDouble(Double d) {}
+
   @AcceptNull
-  public void bar(String s) {}
+  public void barByte(Byte b) {}
 
-  public void bar1(String s) {}
+  public void barFloat(Float f) {}
 
-  public void bar2(String s) {}
+  @RejectNull(@Argument(type = Long.class, ignore = true))
+  public void barLong(Long l) {}
+
+  @RejectNull(@Argument(type = Number.class, message = "Noop!"))
+  public void barNumber(Number n) {}
 
 }

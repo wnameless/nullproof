@@ -36,6 +36,8 @@ import com.google.inject.TypeLiteral;
  */
 public final class NullProof {
 
+  private NullProof() {}
+
   /**
    * 
    * {@link NullProof}.{@link Constructor} is a builder which is designed to
@@ -56,9 +58,8 @@ public final class NullProof {
   public static class Constructor<E> {
 
     private final Class<E> klass;
-    private final List<TypeLiteral<?>> typeLiterals =
-        new ArrayList<TypeLiteral<?>>();
-    private final List<Object> arguments = new ArrayList<Object>();
+    private final List<TypeLiteral<?>> typeLiterals;
+    private final List<Object> arguments;
 
     /**
      * Returns a {@link NullProof.Constructor}.
@@ -68,6 +69,8 @@ public final class NullProof {
      */
     public Constructor(Class<E> klass) {
       this.klass = klass;
+      typeLiterals = new ArrayList<TypeLiteral<?>>();
+      arguments = new ArrayList<Object>();
     }
 
     public <T> ArgumentHolder<E> forType(TypeLiteral<T> typeLiteral) {

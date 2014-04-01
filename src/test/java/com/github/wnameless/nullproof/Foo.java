@@ -20,12 +20,7 @@
  */
 package com.github.wnameless.nullproof;
 
-import static com.github.wnameless.nullproof.NullProof.nullProof;
-
-import java.util.HashMap;
 import java.util.Map;
-
-import com.google.inject.TypeLiteral;
 
 public class Foo {
 
@@ -35,30 +30,14 @@ public class Foo {
 
   public Foo() {}
 
-  public void method1(String s) {
-    method2(null);
+  private void bar(String s) {}
+
+  public void barString(String s) {
+    bar(null);
   }
 
-  private void method2(String s) {}
+  public void barInteger(Integer i) {}
 
-  public void method3(String s) {
-    method2(null);
-  }
-
-  public void method4(String s) {
-    method2(null);
-  }
-
-  public static void main(String[] arg) {
-    nullProof(Foo.class);
-    nullProof(Foo.class, 1);
-
-    Foo foo =
-        new NullProof.Constructor<Foo>(Foo.class)
-            .forType(new TypeLiteral<Map<String, Integer>>() {})
-            .addArgument(new HashMap<String, Integer>()).make();
-
-    foo.method1(null);
-  }
+  public void barDouble(Double d) {}
 
 }
