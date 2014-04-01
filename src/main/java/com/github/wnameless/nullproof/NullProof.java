@@ -138,8 +138,11 @@ public final class NullProof {
         Class<?>[] paramTypes = new Class<?>[0];
         for (java.lang.reflect.Constructor<?> ct : klass.getConstructors()) {
           boolean involkable = true;
+
           paramTypes = ct.getParameterTypes();
-          if (paramTypes.length == args.length) {
+          if (paramTypes.length != args.length) {
+            continue;
+          } else {
             for (int i = 0; i < args.length; i++) {
               if (args[i] == null)
                 continue;
@@ -149,6 +152,7 @@ public final class NullProof {
                 break;
             }
           }
+
           if (involkable)
             break;
         }

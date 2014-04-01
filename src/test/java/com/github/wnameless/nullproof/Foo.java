@@ -20,15 +20,20 @@
  */
 package com.github.wnameless.nullproof;
 
+import static com.github.wnameless.nullproof.NullProof.nullProof;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.wnameless.nullproof.NullProof;
 import com.google.inject.TypeLiteral;
 
 public class Foo {
 
   public Foo(Map<String, Integer> map) {}
+
+  public Foo(Integer i) {}
+
+  public Foo() {}
 
   public void method1(String s) {
     method2(null);
@@ -45,6 +50,9 @@ public class Foo {
   }
 
   public static void main(String[] arg) {
+    nullProof(Foo.class);
+    nullProof(Foo.class, 1);
+
     Foo foo =
         new NullProof.Constructor<Foo>(Foo.class)
             .forType(new TypeLiteral<Map<String, Integer>>() {})
