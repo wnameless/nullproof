@@ -146,11 +146,11 @@ public final class NullProof {
           bind((TypeLiteral<Object>) types[i]).toInstance((Object) args[i]);
         }
 
+        Class<?>[] paramTypes = new Class<?>[types.length];
+        for (int i = 0; i < types.length; i++) {
+          paramTypes[i] = types[i].getRawType();
+        }
         try {
-          Class<?>[] paramTypes = new Class<?>[types.length];
-          for (int i = 0; i < types.length; i++) {
-            paramTypes[i] = types[i].getRawType();
-          }
           bind(klass).toConstructor(klass.getConstructor(paramTypes));
         } catch (NoSuchMethodException e) {
           addError(e);
@@ -202,7 +202,6 @@ public final class NullProof {
         for (int i = 0; i < args.length; i++) {
           bind((Class<Object>) paramTypes[i]).toInstance((Object) args[i]);
         }
-
         try {
           bind(klass).toConstructor(klass.getConstructor(paramTypes));
         } catch (NoSuchMethodException e) {
