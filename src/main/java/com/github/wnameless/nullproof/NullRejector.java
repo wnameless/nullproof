@@ -30,7 +30,7 @@ import com.google.inject.AbstractModule;
  * from method calls by AOP programming.
  * 
  */
-public class NullRejector extends AbstractModule {
+public final class NullRejector extends AbstractModule {
 
   @Override
   protected void configure() {
