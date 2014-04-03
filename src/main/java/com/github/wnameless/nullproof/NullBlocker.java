@@ -36,18 +36,19 @@ import com.github.wnameless.nullproof.annotation.RejectNull;
 
 /**
  * 
- * {@link NullBlocker} is a Guice interceptor for raising a NullPointerException
- * if any null object is found on arguments of the called method.
+ * {@link NullBlocker} is a Guice MethodInterceptor which is designed to raise a
+ * NullPointerException if any null arguments are found during the method calls.
  * 
  */
 public final class NullBlocker implements MethodInterceptor {
 
-  private static final int REGULAR_EXCEPTION = -1;
-  private static final int NO_EXCEPTION = Integer.MIN_VALUE;
+  private static final int REGULAR_ERROR = -1;
+  private static final int NO_ERROR = Integer.MIN_VALUE;
 
   private static final Argument[] emptyArgumentAry = new Argument[0];
   private static final String[] emptyStringAry = new String[0];
 
+  @Override
   public Object invoke(MethodInvocation invocation) throws Throwable {
     Method m = invocation.getMethod();
     Class<?> klass = m.getDeclaringClass();
@@ -75,8 +76,8 @@ public final class NullBlocker implements MethodInterceptor {
       Argument[] arguments = emptyArgumentAry;
       preventNulls(m, args, arguments);
     } else {
-      String[] exceptions = classAN == null ? emptyStringAry : classAN.value();
-      if (notFoundIn(exceptions, m.getName()))
+      String[] nullables = classAN == null ? emptyStringAry : classAN.value();
+      if (notFoundIn(nullables, m.getName()))
         preventNulls(m, args, classRN.value());
     }
 
@@ -110,42 +111,42 @@ public final class NullBlocker implements MethodInterceptor {
     for (int i = 0; i < argTypes.length; i++) {
       Object arg = args[i];
       Class<?> type = argTypes[i];
-      int exceptionType = checkExceptionType(arguments, arg, type);
-      if (exceptionType == NO_EXCEPTION)
+      int errorType = checkErrorType(arguments, arg, type);
+      if (errorType == NO_ERROR)
         continue;
-      else if (exceptionType == REGULAR_EXCEPTION)
+      else if (errorType == REGULAR_ERROR)
         throw new NullPointerException("Parameter<" + type.getSimpleName()
             + "> can't be null" + buildSuffix(m));
       else
-        throw new NullPointerException(arguments[exceptionType].message()
+        throw new NullPointerException(arguments[errorType].message()
             + buildSuffix(m));
     }
   }
 
-  private boolean notFoundIn(String[] exceptions, String methodName) {
-    for (String name : exceptions) {
-      if (methodName.equals(name) || methodName.equals("equals"))
+  private boolean notFoundIn(String[] nullables, String methodName) {
+    for (String name : nullables) {
+      if (methodName.equals(name))
         return false;
     }
     return true;
   }
 
-  private static int checkExceptionType(Argument[] arguments, Object arg,
+  private static int checkErrorType(Argument[] arguments, Object arg,
       Class<?> klass) {
     if (arg != null)
-      return NO_EXCEPTION;
+      return NO_ERROR;
 
     for (int i = 0; i < arguments.length; i++) {
       Argument a = arguments[i];
       if (a.type().equals(klass)) {
         if (a.ignore())
-          return NO_EXCEPTION;
+          return NO_ERROR;
         else
           return i;
       }
     }
 
-    return REGULAR_EXCEPTION;
+    return REGULAR_ERROR;
   }
 
 }
