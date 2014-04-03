@@ -27,14 +27,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.github.wnameless.nullproof.NullRejector;
+import com.github.wnameless.nullproof.NullProof;
 
 /**
  * 
- * {@link RejectNull} can be used with {@link NullRejector} and automatically
- * check all arguments of method calls. It raises NullPointerException if any
- * null object is found. This annotation should use with
- * {@link NullRejector#nullProof} for AOP purpose.
+ * {@link RejectNull} must be used with {@link NullProof}. It automatically
+ * checks all the arguments of method calls. It raises NullPointerException if
+ * any null argument is found. This annotation should use with
+ * {@link NullProof#nullProof} or {@link NullProof#Constructor} for AOP purpose.
  *
  */
 @Retention(RUNTIME)
@@ -42,7 +42,7 @@ import com.github.wnameless.nullproof.NullRejector;
 public @interface RejectNull {
 
   /**
-   * The detail actions can be described by Error annotations.
+   * The detail actions can be described by {@link Argument} annotations.
    * 
    * @return an Error array
    */

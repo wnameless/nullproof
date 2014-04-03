@@ -37,7 +37,7 @@ import com.github.wnameless.nullproof.annotation.RejectNull;
 /**
  * 
  * {@link NullBlocker} is a Guice MethodInterceptor which is designed to raise a
- * NullPointerException if any null arguments are found during the method calls.
+ * NullPointerException if any null argument is found during a method call.
  * 
  */
 public final class NullBlocker implements MethodInterceptor {

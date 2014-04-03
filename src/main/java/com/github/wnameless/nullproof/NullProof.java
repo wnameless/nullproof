@@ -29,9 +29,9 @@ import com.google.inject.TypeLiteral;
 
 /**
  * 
- * NullProof protects any Object from null arguments. After the enhancement, a
- * NullPointerException will raise automatically if any null argument is
- * detected.
+ * {@link NullProof} protects any Object from null arguments. After the
+ * enhancement, a NullPointerException will raise automatically if any null
+ * argument is detected.
  *
  */
 public final class NullProof {

@@ -27,11 +27,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.github.wnameless.nullproof.NullProof;
+
 /**
  * 
  * {@link Argument} can be only used in {@link RejectNull} annotation. It
- * describes the detail actions while any null object is found by
- * {@link RejectNull}.
+ * describes the detail actions while any null argument is found by
+ * {@link NullProof}.
  *
  */
 @Retention(RUNTIME)

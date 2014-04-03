@@ -27,11 +27,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.github.wnameless.nullproof.NullRejector;
+import com.github.wnameless.nullproof.NullProof;
 
 /**
  * 
- * {@link AcceptNull} can be used to let {@link NullRejector} ignore certain
+ * {@link AcceptNull} can be used to let {@link NullProof} ignore certain
  * methods. It can be annotated both on Type and Method, but the value only
  * takes effect when it is on a Type, otherwise it ignores the annotated Method
  * directly.
