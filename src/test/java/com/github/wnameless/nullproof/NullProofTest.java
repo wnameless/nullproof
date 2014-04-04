@@ -133,7 +133,7 @@ public class NullProofTest {
       annFoo1.barString(null);
       fail();
     } catch (NullPointerException ex) {
-      assertTrue(ex.getMessage().startsWith("Oop! at String"));
+      assertTrue(ex.getMessage().startsWith("Oop!"));
     }
   }
 

@@ -49,8 +49,7 @@ public @interface Argument {
 
   /**
    * The exception message is used while a NullPointerException is raised on
-   * null arguments of target Class. $TYPE can be used to back reference the
-   * type name of argument.
+   * null arguments of target Class.
    * 
    * @return a String
    */

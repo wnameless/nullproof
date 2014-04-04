@@ -41,7 +41,7 @@ public final class NullProof {
   /**
    * 
    * {@link NullProof}.{@link Constructor} is a builder which is designed to
-   * make a null proof instance easier.
+   * make a nullproof instance easier.
    * 
    * <P>
    * For example:<br>
@@ -84,9 +84,9 @@ public final class NullProof {
     }
 
     /**
-     * Creates a null proof instance of given Class.
+     * Creates a nullproof instance of given Class.
      * 
-     * @return a null proof instance of given Class
+     * @return a nullproof instance of given Class
      */
     public E make() {
       return of(klass,
@@ -116,7 +116,7 @@ public final class NullProof {
    * 
    * @param klass
    *          any non-final Class with non-private and zero-argument constructor
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass) {
     return Guice.createInjector(new NullRejector()).getInstance(klass);
@@ -133,7 +133,7 @@ public final class NullProof {
    *          literal types of constructor parameters
    * @param args
    *          arguments of constructor
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final TypeLiteral<?>[] types,
       final Object... args) {
@@ -166,7 +166,7 @@ public final class NullProof {
    *          Class of target object
    * @param b
    *          any byte
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final byte b) {
     try {
@@ -194,7 +194,7 @@ public final class NullProof {
    *          Class of target object
    * @param b
    *          any Byte
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Byte b) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Byte>() {})
@@ -209,7 +209,7 @@ public final class NullProof {
    *          Class of target object
    * @param s
    *          any short
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final short s) {
     try {
@@ -238,7 +238,7 @@ public final class NullProof {
    *          Class of target object
    * @param s
    *          any Short
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Short s) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Short>() {})
@@ -253,7 +253,7 @@ public final class NullProof {
    *          Class of target object
    * @param i
    *          any int
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final int i) {
     try {
@@ -281,7 +281,7 @@ public final class NullProof {
    *          Class of target object
    * @param i
    *          any Integer
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Integer i) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Integer>() {})
@@ -296,7 +296,7 @@ public final class NullProof {
    *          Class of target object
    * @param l
    *          any long
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final long l) {
     try {
@@ -324,7 +324,7 @@ public final class NullProof {
    *          Class of target object
    * @param l
    *          any Long
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Long l) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Long>() {})
@@ -339,7 +339,7 @@ public final class NullProof {
    *          Class of target object
    * @param f
    *          any float
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final float f) {
     try {
@@ -368,7 +368,7 @@ public final class NullProof {
    *          Class of target object
    * @param f
    *          any Float
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Float f) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Float>() {})
@@ -383,7 +383,7 @@ public final class NullProof {
    *          Class of target object
    * @param d
    *          any double
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final double d) {
     try {
@@ -412,7 +412,7 @@ public final class NullProof {
    *          Class of target object
    * @param d
    *          any Double
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Double d) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Double>() {})
@@ -427,7 +427,7 @@ public final class NullProof {
    *          Class of target object
    * @param b
    *          any boolean
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final boolean b) {
     try {
@@ -456,7 +456,7 @@ public final class NullProof {
    *          Class of target object
    * @param b
    *          any Boolean
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Boolean b) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Boolean>() {})
@@ -471,7 +471,7 @@ public final class NullProof {
    *          Class of target object
    * @param c
    *          any char
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final char c) {
     try {
@@ -499,7 +499,7 @@ public final class NullProof {
    *          Class of target object
    * @param c
    *          any Character
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(Class<E> klass, Character c) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Character>() {})
@@ -515,7 +515,7 @@ public final class NullProof {
    *          Class of target object
    * @param args
    *          arguments of constructor
-   * @return a null proof instance of given Class
+   * @return a nullproof instance of given Class
    */
   public static <E> E of(final Class<E> klass, final Object... args) {
     return Guice.createInjector(new NullRejector(), new AbstractModule() {

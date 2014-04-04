@@ -1,6 +1,6 @@
 nullproof
 =============
-A Java nullproof object constructor by Guice AOP
+A Java null arguments proofed object constructor by Guice AOP
 
 ##Purpose
 If you have a Class which conatains 20 methods and each method takes 2 arguments,
@@ -35,16 +35,16 @@ foo.bar(null); // throws NullPointerException
 #Feature
 Annotation-Driven configuration:
 ```java
-    @RejectNull // On Type or Method.
-    @Argument   // Can only used within RejectNull
-    @AcceptNull // On Type or Method.
+@RejectNull // On Type or Method.
+@Argument   // Can only used within RejectNull
+@AcceptNull // On Type or Method.
 ```
 
 @RejectNull can be used to set up the default behavior of NullProof.
 ```java
-    @RejectNull({
-        @Argument(type = String.class, message = "Oop! at $TYPE"), // $TYPE can back reference the type of argument
-        @Argument(type = Integer.class, ignore = true) })
+@RejectNull({
+    @Argument(type = String.class, message = "Oop!"),
+    @Argument(type = Integer.class, ignore = true) })
 ```
 
 @AcceptNull can be used to ignore certain methods.
