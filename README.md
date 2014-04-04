@@ -49,7 +49,7 @@ Annotation-Driven configuration:
 
 @AcceptNull can be used to ignore certain methods.
 ```java
-    @AcceptNull({ "bar1", "bar1" }) // Works on Type
+    @AcceptNull({ "bar1", "bar2" }) // Works on Type
     @AcceptNull // Works on Method
 ```
 
