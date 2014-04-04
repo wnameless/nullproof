@@ -25,6 +25,7 @@ import static org.junit.Assert.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +39,12 @@ import com.google.inject.TypeLiteral;
 public class NullProofTest {
 
   Foo foo;
-  AnnotatedFoo annFoo;
+  AnnotatedFoo1 annFoo1;
 
   @Before
   public void setUp() throws Exception {
     foo = NullProof.of(Foo.class);
-    annFoo = NullProof.of(AnnotatedFoo.class);
+    annFoo1 = NullProof.of(AnnotatedFoo1.class);
   }
 
   @Test
@@ -57,6 +58,21 @@ public class NullProofTest {
   @Test
   public void testNullProofWithNormalArgument() {
     NullProof.of(Foo.class, 1);
+  }
+
+  @Test(expected = CreationException.class)
+  public void testNullProofWithNullArgument() {
+    NullProof.of(Foo.class, (Integer) null);
+  }
+
+  @Test(expected = CreationException.class)
+  public void testNullProofWithWrongArgumentNumber() {
+    NullProof.of(Foo.class, 1, 2);
+  }
+
+  @Test(expected = CreationException.class)
+  public void testNullProofWithWrongTypeArgument() {
+    NullProof.of(Foo.class, new Date());
   }
 
   @Test
@@ -84,6 +100,16 @@ public class NullProofTest {
   }
 
   @Test
+  public void testEqulasWithNull() {
+    foo.equals((Object) null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testOverloadedEqulasWithNull() {
+    foo.equals((Integer) null);
+  }
+
+  @Test
   public void nullProofIsNotAffectPrivateMethods() {
     foo.barString("");
   }
@@ -98,43 +124,42 @@ public class NullProofTest {
   @Test
   public void globalRejectNullExceptionMessageTest() {
     try {
-      annFoo.barString(null);
+      annFoo1.barString(null);
       fail();
     } catch (NullPointerException ex) {
-      System.out.println(ex.getMessage());
       assertTrue(ex.getMessage().startsWith("Oop! at String"));
     }
   }
 
   @Test
   public void globalRejectNullIngoreTest() {
-    annFoo.barInteger(null);
+    annFoo1.barInteger(null);
   }
 
   @Test
   public void globalAccectNullIngoreTest() {
-    annFoo.barDouble(null);
+    annFoo1.barDouble(null);
   }
 
   @Test
   public void localAccectNullIngoreTest() {
-    annFoo.barByte(null);
+    annFoo1.barByte(null);
   }
 
   @Test(expected = NullPointerException.class)
   public void normalRejectNullTest() {
-    annFoo.barFloat(null);
+    annFoo1.barFloat(null);
   }
 
   @Test
   public void localRejectNullIngoreTest() {
-    annFoo.barLong(null);
+    annFoo1.barLong(null);
   }
 
   @Test
   public void localRejectNullExceptionMessageTest() {
     try {
-      annFoo.barNumber(null);
+      annFoo1.barNumber(null);
       fail();
     } catch (NullPointerException ex) {
       assertTrue(ex.getMessage().startsWith("Noop!"));
@@ -143,12 +168,65 @@ public class NullProofTest {
 
   @Test(expected = NullPointerException.class)
   public void localRejectNullOverrideTest() {
-    annFoo.barInteger2(null);
+    annFoo1.barInteger2(null);
   }
 
   @Test
   public void acceptNullIsHigherThanRejectNullTest() {
-    annFoo.barDate(null);
+    annFoo1.barDate(null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testRejectNullWithoutAcceptNullOnClass() {
+    AnnotatedFoo2 annFoo2 = NullProof.of(AnnotatedFoo2.class);
+    annFoo2.barFloat(null);
+  }
+
+  @Test
+  public void testOnlyAcceptNullOnClass() {
+    AnnotatedFoo3 annFoo3 = NullProof.of(AnnotatedFoo3.class);
+    annFoo3.barInteger(null);
+    annFoo3.barDouble(null);
+  }
+
+  @Test
+  public void testByteConstructor() {
+    foo = NullProof.of(Foo.class, Byte.valueOf("0"));
+  }
+
+  @Test
+  public void testShortConstructor() {
+    foo = NullProof.of(Foo.class, Short.valueOf("0"));
+  }
+
+  @Test
+  public void testIntConstructor() {
+    foo = NullProof.of(Foo.class, Integer.valueOf("0"));
+  }
+
+  @Test
+  public void testLongConstructor() {
+    foo = NullProof.of(Foo.class, Long.valueOf("0"));
+  }
+
+  @Test
+  public void testFloatConstructor() {
+    foo = NullProof.of(Foo.class, Float.valueOf("0"));
+  }
+
+  @Test
+  public void testDoubleConstructor() {
+    foo = NullProof.of(Foo.class, Double.valueOf("0"));
+  }
+
+  @Test
+  public void testBooleanConstructor() {
+    foo = NullProof.of(Foo.class, Boolean.FALSE);
+  }
+
+  @Test
+  public void testCharConstructor() {
+    foo = NullProof.of(Foo.class, Character.valueOf('a'));
   }
 
 }

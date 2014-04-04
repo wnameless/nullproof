@@ -23,13 +23,9 @@ package com.github.wnameless.nullproof;
 import java.util.Date;
 
 import com.github.wnameless.nullproof.annotation.AcceptNull;
-import com.github.wnameless.nullproof.annotation.Argument;
-import com.github.wnameless.nullproof.annotation.RejectNull;
 
-@RejectNull({ @Argument(type = String.class, message = "Oop! at $TYPE"),
-    @Argument(type = Integer.class, ignore = true) })
-@AcceptNull("barDouble")
-public class AnnotatedFoo extends Foo {
+@AcceptNull({ "barInteger", "barDouble" })
+public class AnnotatedFoo3 extends Foo {
 
   @Override
   public void barString(String s) {}
@@ -37,25 +33,19 @@ public class AnnotatedFoo extends Foo {
   @Override
   public void barInteger(Integer i) {}
 
-  @RejectNull
   public void barInteger2(Integer i) {}
 
   @Override
   public void barDouble(Double d) {}
 
-  @AcceptNull
   public void barByte(Byte b) {}
 
   public void barFloat(Float f) {}
 
-  @RejectNull(@Argument(type = Long.class, ignore = true))
   public void barLong(Long l) {}
 
-  @RejectNull(@Argument(type = Number.class, message = "Noop!"))
   public void barNumber(Number n) {}
 
-  @RejectNull
-  @AcceptNull
   public void barDate(Date d) {}
 
 }

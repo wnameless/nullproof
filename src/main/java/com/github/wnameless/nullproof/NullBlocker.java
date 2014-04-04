@@ -45,9 +45,7 @@ public final class NullBlocker implements MethodInterceptor {
 
   private static final int REGULAR_ERROR = -1;
   private static final int NO_ERROR = Integer.MIN_VALUE;
-
-  private static final Argument[] emptyArgumentAry = new Argument[0];
-  private static final String[] emptyStringAry = new String[0];
+  private static final Argument[] emptyArgAnnotAry = new Argument[0];
 
   @Override
   public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -73,14 +71,9 @@ public final class NullBlocker implements MethodInterceptor {
 
     AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
     RejectNull classRN = klass.getAnnotation(RejectNull.class);
-    if (classRN == null) {
-      Argument[] arguments = emptyArgumentAry;
-      preventNulls(m, args, arguments);
-    } else {
-      String[] nullables = classAN == null ? emptyStringAry : classAN.value();
-      if (notFoundIn(nullables, m.getName()))
-        preventNulls(m, args, classRN.value());
-    }
+    if (classAN == null || notFoundIn(classAN.value(), m.getName()))
+      preventNulls(m, args,
+          classRN == null ? emptyArgAnnotAry : classRN.value());
 
     return invocation.proceed();
   }

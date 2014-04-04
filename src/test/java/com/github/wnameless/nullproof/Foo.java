@@ -24,9 +24,25 @@ import java.util.Map;
 
 public class Foo {
 
+  public Foo(byte b) {}
+
+  public Foo(short s) {}
+
+  public Foo(int i) {}
+
+  public Foo(long l) {}
+
+  public Foo(float f) {}
+
+  public Foo(double d) {}
+
+  public Foo(boolean b) {}
+
+  public Foo(char c) {}
+
   public Foo(Map<String, Integer> map) {}
 
-  public Foo(Integer i) {}
+  public Foo(String s) {}
 
   public Foo() {}
 
@@ -39,5 +55,9 @@ public class Foo {
   public void barInteger(Integer i) {}
 
   public void barDouble(Double d) {}
+
+  public boolean equals(Integer i) {
+    return false;
+  }
 
 }

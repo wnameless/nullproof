@@ -152,9 +152,7 @@ public final class NullProof {
         }
         try {
           bind(klass).toConstructor(klass.getConstructor(paramTypes));
-        } catch (NoSuchMethodException e) {
-          addError(e);
-        }
+        } catch (NoSuchMethodException e) {}
       }
 
     }).getInstance(klass);
@@ -204,9 +202,7 @@ public final class NullProof {
         }
         try {
           bind(klass).toConstructor(klass.getConstructor(paramTypes));
-        } catch (NoSuchMethodException e) {
-          addError(e);
-        }
+        } catch (NoSuchMethodException e) {}
       }
 
     }).getInstance(klass);
