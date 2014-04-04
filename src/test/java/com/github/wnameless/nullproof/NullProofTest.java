@@ -74,6 +74,16 @@ public class NullProofTest {
   }
 
   @Test
+  public void testNormalException() {
+    try {
+      foo.barString(null);
+      fail();
+    } catch (NullPointerException ex) {
+      assertTrue(ex.getMessage().startsWith("Parameter<String> can't be null"));
+    }
+  }
+
+  @Test
   public void nullProofIsNotAffectPrivateMethods() {
     foo.barString("");
   }
