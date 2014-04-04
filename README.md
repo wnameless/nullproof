@@ -28,7 +28,7 @@ Class with generic and upcasting arguments constructor
 ```java
 Foo foo = new NullProof.Constructor<Foo>(Foo.class)
         .forType(new TypeLiteral<Map<String, Integer>>() {})
-        .addArgument(new HashMap<String, Integer>()).make();
+        .addArgument(new HashMap<String, Integer>()).create();
 foo.bar(null); // throws NullPointerException
 ```
 

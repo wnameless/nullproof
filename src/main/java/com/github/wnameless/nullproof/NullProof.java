@@ -88,7 +88,7 @@ public final class NullProof {
      * 
      * @return a nullproof instance of given Class
      */
-    public E make() {
+    public E create() {
       return of(klass,
           typeLiterals.toArray(new TypeLiteral[typeLiterals.size()]),
           arguments.toArray());
@@ -198,7 +198,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Byte b) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Byte>() {})
-        .addArgument(b).make();
+        .addArgument(b).create();
   }
 
   /**
@@ -242,7 +242,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Short s) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Short>() {})
-        .addArgument(s).make();
+        .addArgument(s).create();
   }
 
   /**
@@ -285,7 +285,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Integer i) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Integer>() {})
-        .addArgument(i).make();
+        .addArgument(i).create();
   }
 
   /**
@@ -328,7 +328,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Long l) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Long>() {})
-        .addArgument(l).make();
+        .addArgument(l).create();
   }
 
   /**
@@ -372,7 +372,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Float f) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Float>() {})
-        .addArgument(f).make();
+        .addArgument(f).create();
   }
 
   /**
@@ -416,7 +416,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Double d) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Double>() {})
-        .addArgument(d).make();
+        .addArgument(d).create();
   }
 
   /**
@@ -460,7 +460,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Boolean b) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Boolean>() {})
-        .addArgument(b).make();
+        .addArgument(b).create();
   }
 
   /**
@@ -503,7 +503,7 @@ public final class NullProof {
    */
   public static <E> E of(Class<E> klass, Character c) {
     return new Constructor<E>(klass).forType(new TypeLiteral<Character>() {})
-        .addArgument(c).make();
+        .addArgument(c).create();
   }
 
   /**

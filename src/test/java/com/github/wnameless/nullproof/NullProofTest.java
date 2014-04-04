@@ -80,14 +80,14 @@ public class NullProofTest {
   public void testNullProofConstructor() {
     new NullProof.Constructor<Foo>(Foo.class)
         .forType(new TypeLiteral<Map<String, Integer>>() {})
-        .addArgument(new HashMap<String, Integer>()).make();
+        .addArgument(new HashMap<String, Integer>()).create();
   }
 
   @Test(expected = CreationException.class)
   public void nullObjectCanNotBindTest1() {
     new NullProof.Constructor<Foo>(Foo.class)
         .forType(new TypeLiteral<Map<String, Integer>>() {}).addArgument(null)
-        .make();
+        .create();
   }
 
   @Test(expected = CreationException.class)
