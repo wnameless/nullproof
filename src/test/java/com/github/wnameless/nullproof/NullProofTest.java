@@ -20,7 +20,6 @@
  */
 package com.github.wnameless.nullproof;
 
-import static com.github.wnameless.nullproof.NullProof.nullProof;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -43,8 +42,8 @@ public class NullProofTest {
 
   @Before
   public void setUp() throws Exception {
-    foo = nullProof(Foo.class);
-    annFoo = nullProof(AnnotatedFoo.class);
+    foo = NullProof.of(Foo.class);
+    annFoo = NullProof.of(AnnotatedFoo.class);
   }
 
   @Test
@@ -57,7 +56,7 @@ public class NullProofTest {
 
   @Test
   public void testNullProofWithNormalArgument() {
-    nullProof(Foo.class, 1);
+    NullProof.of(Foo.class, 1);
   }
 
   @Test

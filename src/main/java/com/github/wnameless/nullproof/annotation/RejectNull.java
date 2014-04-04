@@ -34,7 +34,7 @@ import com.github.wnameless.nullproof.NullProof;
  * {@link RejectNull} must be used with {@link NullProof}. It automatically
  * checks all the arguments of method calls. It raises NullPointerException if
  * any null argument is found. This annotation should use with
- * {@link NullProof#nullProof} or {@link NullProof#Constructor} for AOP purpose.
+ * {@link NullProof#of} or {@link NullProof#Constructor} for AOP purpose.
  *
  */
 @Retention(RUNTIME)

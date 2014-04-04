@@ -89,7 +89,7 @@ public final class NullProof {
      * @return a null proof instance of given Class
      */
     public E make() {
-      return nullProof(klass,
+      return of(klass,
           typeLiterals.toArray(new TypeLiteral[typeLiterals.size()]),
           arguments.toArray());
     }
@@ -118,7 +118,7 @@ public final class NullProof {
    *          any non-final Class with non-private and zero-argument constructor
    * @return a null proof instance of given Class
    */
-  public static <E> E nullProof(Class<E> klass) {
+  public static <E> E of(Class<E> klass) {
     return Guice.createInjector(new NullRejector()).getInstance(klass);
   }
 
@@ -135,8 +135,8 @@ public final class NullProof {
    *          arguments of constructor
    * @return a null proof instance of given Class
    */
-  public static <E> E nullProof(final Class<E> klass,
-      final TypeLiteral<?>[] types, final Object... args) {
+  public static <E> E of(final Class<E> klass, final TypeLiteral<?>[] types,
+      final Object... args) {
     return Guice.createInjector(new NullRejector(), new AbstractModule() {
 
       @SuppressWarnings("unchecked")
@@ -171,7 +171,7 @@ public final class NullProof {
    *          arguments of constructor
    * @return a null proof instance of given Class
    */
-  public static <E> E nullProof(final Class<E> klass, final Object... args) {
+  public static <E> E of(final Class<E> klass, final Object... args) {
     return Guice.createInjector(new NullRejector(), new AbstractModule() {
 
       @SuppressWarnings("unchecked")

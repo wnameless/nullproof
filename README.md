@@ -3,18 +3,15 @@ nullproof
 A Java nullproof object constructor by Guice AOP
 
 #Quick Start
-```java
-import static com.github.wnameless.nullproof.NullProof.nullProof;
-```
 Class with 0-argument constructor
 ```java
-Foo foo = nullProof(Foo.class);
+Foo foo = NullProof.of(Foo.class);
 foo.bar(null); // throws NullPointerException
 ```
 
 Class with single implementation arguments constructor
 ```java
-Foo foo = nullProof(Foo.class, 123, "abc");
+Foo foo = NullProof.of(Foo.class, 123, "abc");
 foo.bar(null); // throws NullPointerException
 ```
 
