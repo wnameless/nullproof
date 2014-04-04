@@ -26,7 +26,7 @@ import com.github.wnameless.nullproof.annotation.AcceptNull;
 import com.github.wnameless.nullproof.annotation.Argument;
 import com.github.wnameless.nullproof.annotation.RejectNull;
 
-@RejectNull({ @Argument(type = String.class, message = "Oop!"),
+@RejectNull({ @Argument(type = String.class, message = "Oop! at $TYPE"),
     @Argument(type = Integer.class, ignore = true) })
 @AcceptNull("barDouble")
 public class AnnotatedFoo extends Foo {

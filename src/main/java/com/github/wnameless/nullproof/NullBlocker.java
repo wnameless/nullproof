@@ -21,6 +21,7 @@
 package com.github.wnameless.nullproof;
 
 import java.lang.reflect.Method;
+import java.util.regex.Pattern;
 
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -119,6 +120,7 @@ public final class NullBlocker implements MethodInterceptor {
             + "> can't be null" + buildSuffix(m));
       else
         throw new NullPointerException(arguments[errorType].message()
+            .replaceAll(Pattern.quote("$TYPE"), type.getSimpleName())
             + buildSuffix(m));
     }
   }
