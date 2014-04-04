@@ -11,6 +11,15 @@ if(arg == null)
 ```
 With NullProof, you don't need to do it anymore.
 
+#Maven Repo
+```xml
+<dependency>
+    <groupId>com.github.wnameless</groupId>
+    <artifactId>nullproof</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+
 #Quick Start
 Class with 0-argument constructor
 ```java
