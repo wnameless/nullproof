@@ -63,12 +63,12 @@ java.lang.NullPointerException: Parameter<String> can't be null
 #Best Practice
 Using NullProof with static factory pattern to ensure every instance is prevented from null arguments.
 ```java
-public Foo {
+public Foo { // Non-final class is required
     public static Foo create() {
       return NullProof.of(Foo.class);
     }
 
-    Foo () {} // Guice requires the class with at least a package-private(non-private) constuctor to do the AOP
+    Foo () {} // At least 1 package-private(non-private) constuctor is required to let Guice do the AOP
     ...
 }
 ```
