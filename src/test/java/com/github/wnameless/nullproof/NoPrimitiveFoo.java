@@ -20,44 +20,22 @@
  */
 package com.github.wnameless.nullproof;
 
-import java.util.Map;
+public class NoPrimitiveFoo {
 
-public class Foo {
+  NoPrimitiveFoo(Byte b) {}
 
-  public Foo(byte b, String s) {}
+  NoPrimitiveFoo(Short s) {}
 
-  public Foo(short s, String str) {}
+  NoPrimitiveFoo(Integer i) {}
 
-  public Foo(int i, String s) {}
+  NoPrimitiveFoo(Long l) {}
 
-  public Foo(long l, String s) {}
+  NoPrimitiveFoo(Float f) {}
 
-  public Foo(float f, String s) {}
+  NoPrimitiveFoo(Double d) {}
 
-  public Foo(double d, String s) {}
+  NoPrimitiveFoo(Boolean b) {}
 
-  public Foo(boolean b, String s) {}
-
-  public Foo(char c, String s) {}
-
-  public Foo(Map<String, Integer> map) {}
-
-  public Foo(String s) {}
-
-  public Foo() {}
-
-  private void bar(String s) {}
-
-  public void barString(String s) {
-    bar(null);
-  }
-
-  public void barInteger(Integer i) {}
-
-  public void barDouble(Double d) {}
-
-  public boolean equals(Integer i) {
-    return false;
-  }
+  NoPrimitiveFoo(Character c) {}
 
 }

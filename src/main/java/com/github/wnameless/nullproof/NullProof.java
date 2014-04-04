@@ -151,11 +151,359 @@ public final class NullProof {
           paramTypes[i] = types[i].getRawType();
         }
         try {
-          bind(klass).toConstructor(klass.getConstructor(paramTypes));
+          bind(klass).toConstructor(klass.getDeclaredConstructor(paramTypes));
         } catch (NoSuchMethodException e) {}
       }
 
     }).getInstance(klass);
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param b
+   *          any byte
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final byte b) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(byte.class).toInstance(b);
+          try {
+            bind(klass).toConstructor(klass.getDeclaredConstructor(byte.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Byte.valueOf(b));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param b
+   *          any Byte
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Byte b) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Byte>() {})
+        .addArgument(b).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param s
+   *          any short
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final short s) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(short.class).toInstance(s);
+          try {
+            bind(klass)
+                .toConstructor(klass.getDeclaredConstructor(short.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Short.valueOf(s));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param s
+   *          any Short
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Short s) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Short>() {})
+        .addArgument(s).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param i
+   *          any int
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final int i) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(int.class).toInstance(i);
+          try {
+            bind(klass).toConstructor(klass.getDeclaredConstructor(int.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Integer.valueOf(i));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param i
+   *          any Integer
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Integer i) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Integer>() {})
+        .addArgument(i).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param l
+   *          any long
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final long l) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(long.class).toInstance(l);
+          try {
+            bind(klass).toConstructor(klass.getDeclaredConstructor(long.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Long.valueOf(l));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param l
+   *          any Long
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Long l) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Long>() {})
+        .addArgument(l).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param f
+   *          any float
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final float f) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(float.class).toInstance(f);
+          try {
+            bind(klass)
+                .toConstructor(klass.getDeclaredConstructor(float.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Float.valueOf(f));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param f
+   *          any Float
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Float f) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Float>() {})
+        .addArgument(f).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param d
+   *          any double
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final double d) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(double.class).toInstance(d);
+          try {
+            bind(klass).toConstructor(
+                klass.getDeclaredConstructor(double.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Double.valueOf(d));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param d
+   *          any Double
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Double d) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Double>() {})
+        .addArgument(d).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param b
+   *          any boolean
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final boolean b) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(boolean.class).toInstance(b);
+          try {
+            bind(klass).toConstructor(
+                klass.getDeclaredConstructor(boolean.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Boolean.valueOf(b));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param b
+   *          any Boolean
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Boolean b) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Boolean>() {})
+        .addArgument(b).make();
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param c
+   *          any char
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(final Class<E> klass, final char c) {
+    try {
+      return Guice.createInjector(new NullRejector(), new AbstractModule() {
+
+        @Override
+        protected void configure() {
+          bind(char.class).toInstance(c);
+          try {
+            bind(klass).toConstructor(klass.getDeclaredConstructor(char.class));
+          } catch (NoSuchMethodException e) {}
+        }
+
+      }).getInstance(klass);
+    } catch (Exception e) {
+      return of(klass, Character.valueOf(c));
+    }
+  }
+
+  /**
+   * Returns an instance of given Class which is prevented null arguments by
+   * throwing NullPointerException from method calls.
+   * 
+   * @param klass
+   *          Class of target object
+   * @param c
+   *          any Character
+   * @return a null proof instance of given Class
+   */
+  public static <E> E of(Class<E> klass, Character c) {
+    return new Constructor<E>(klass).forType(new TypeLiteral<Character>() {})
+        .addArgument(c).make();
   }
 
   /**
@@ -176,7 +524,8 @@ public final class NullProof {
       @Override
       protected void configure() {
         Class<?>[] paramTypes = new Class<?>[0];
-        for (java.lang.reflect.Constructor<?> ct : klass.getConstructors()) {
+        for (java.lang.reflect.Constructor<?> ct : klass
+            .getDeclaredConstructors()) {
           boolean involkable = true;
 
           paramTypes = ct.getParameterTypes();
@@ -201,7 +550,7 @@ public final class NullProof {
           bind((Class<Object>) paramTypes[i]).toInstance((Object) args[i]);
         }
         try {
-          bind(klass).toConstructor(klass.getConstructor(paramTypes));
+          bind(klass).toConstructor(klass.getDeclaredConstructor(paramTypes));
         } catch (NoSuchMethodException e) {}
       }
 
