@@ -44,7 +44,7 @@ public class NullProofTest {
 
   @Before
   public void setUp() throws Exception {
-    foo = NullProof.of(Foo.class);
+    foo = new Foo();
     annFoo1 = NullProof.of(AnnotatedFoo1.class);
   }
 

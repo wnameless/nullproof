@@ -22,6 +22,9 @@ package com.github.wnameless.nullproof;
 
 import java.util.Map;
 
+import com.github.wnameless.nullproof.annotation.RejectNull;
+
+@RejectNull
 public class Foo {
 
   public Foo(byte b, String s) {}
