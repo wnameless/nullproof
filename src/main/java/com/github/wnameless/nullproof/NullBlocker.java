@@ -48,24 +48,27 @@ public final class NullBlocker implements MethodInterceptor {
 
   @Override
   public Object invoke(MethodInvocation invocation) throws Throwable {
-    Method m = invocation.getMethod();
+    blockNulls(invocation.getMethod(), invocation.getArguments());
+    return invocation.proceed();
+  }
+
+  public static void blockNulls(Method m, Object[] args) {
     Class<?> klass = m.getDeclaringClass();
     Class<?>[] argTypes = m.getParameterTypes();
-    Object[] args = invocation.getArguments();
 
     // Object#equals is always ignored
     if (argTypes.length == 1 && m.getName().equals("equals")
         && Object.class.equals(argTypes[0]))
-      return invocation.proceed();
+      return;
 
     AcceptNull methodAN = m.getAnnotation(AcceptNull.class);
     if (methodAN != null)
-      return invocation.proceed();
+      return;
 
     RejectNull methodRN = m.getAnnotation(RejectNull.class);
     if (methodRN != null) {
       preventNulls(m, args, methodRN.value());
-      return invocation.proceed();
+      return;
     }
 
     AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
@@ -74,10 +77,10 @@ public final class NullBlocker implements MethodInterceptor {
       preventNulls(m, args,
           classRN == null ? emptyArgAnnotAry : classRN.value());
 
-    return invocation.proceed();
+    return;
   }
 
-  private String buildSuffix(Method m) {
+  private static String buildSuffix(Method m) {
     Class<?>[] argTypes = m.getParameterTypes();
     Class<?> klass = m.getDeclaringClass();
 
@@ -98,7 +101,8 @@ public final class NullBlocker implements MethodInterceptor {
         + klass.getSimpleName() + ".java:" + lineNum + ")";
   }
 
-  private void preventNulls(Method m, Object[] args, Argument[] arguments) {
+  private static void
+      preventNulls(Method m, Object[] args, Argument[] arguments) {
     Class<?>[] argTypes = m.getParameterTypes();
 
     for (int i = 0; i < argTypes.length; i++) {
@@ -109,14 +113,14 @@ public final class NullBlocker implements MethodInterceptor {
         continue;
       else if (errorType == REGULAR_ERROR)
         throw new NullPointerException("Parameter<" + type.getSimpleName()
-            + "> can't be null" + buildSuffix(m));
+            + "> is not nullable" + buildSuffix(m));
       else
         throw new NullPointerException(arguments[errorType].message()
             + buildSuffix(m));
     }
   }
 
-  private boolean notFoundIn(String[] nullables, String methodName) {
+  private static boolean notFoundIn(String[] nullables, String methodName) {
     for (String name : nullables) {
       if (methodName.equals(name))
         return false;
