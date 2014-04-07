@@ -48,6 +48,11 @@ public class NullProofTest {
     annFoo1 = NullProof.of(AnnotatedFoo1.class);
   }
 
+  @Test(expected = NullPointerException.class)
+  public void nullProofIsWorkingWithoutRejectNullAnnotation() {
+    NullProof.of(NotAnnotatedFoo.class).bar(null);
+  }
+
   @Test
   public void testPrivateConstructor() throws Exception {
     Constructor<NullProof> c = NullProof.class.getDeclaredConstructor();

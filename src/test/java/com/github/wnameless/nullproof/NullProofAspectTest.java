@@ -20,6 +20,11 @@ public class NullProofAspectTest {
   }
 
   @Test
+  public void aspectJIsNotWorkingWithoutRejectNullAnnotation() {
+    new NotAnnotatedFoo().bar(null);
+  }
+
+  @Test
   public void testNormalException() {
     try {
       foo.barString(null);

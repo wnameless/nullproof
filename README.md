@@ -1,6 +1,6 @@
 nullproof
 =============
-A Java null arguments proofed object constructor by Guice AOP
+A Java null arguments proofed object constructor by Guice AOP or AspectJ
 
 ##Purpose
 If you have a Class which conatains 20 methods and each method takes 2 arguments,
@@ -16,11 +16,18 @@ With NullProof, you don't need to do it anymore.
 <dependency>
     <groupId>com.github.wnameless</groupId>
     <artifactId>nullproof</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
+AspectJ supported since v0.2.0.
 
-#Quick Start
+#Quick Start(With AspectJ)
+```java
+@RejectNull
+public class Foo { ... }
+```
+
+#Quick Start(Without AspectJ)
 Class with 0-argument constructor
 ```java
 Foo foo = NullProof.of(Foo.class);
@@ -42,6 +49,13 @@ foo.bar(null); // throws NullPointerException
 ```
 
 #Feature
+Support both runtime Guice AOP and AspectJ.
+The only difference is that AspectJ works only on the class annotated with @RejectNull.
+```java
+Foo foo1 = NullProof.of(Foo.class); // Works even there is no @RejectNull on the class.
+Foo foo2 = new Foo(); // Works only if there is @RejectNull annotated on the class (and of course you have to compile it with AspectJ).
+```
+
 Annotation-Driven configuration:
 ```java
 @RejectNull // On Type or Method.
