@@ -19,15 +19,16 @@ With NullProof, you don't need to do it anymore.
     <version>0.2.0</version>
 </dependency>
 ```
-AspectJ supported since v0.2.0.
+AspectJ is supported since v0.2.0.
 
-#Quick Start(With AspectJ)
+#Quick Start
+###With AspectJ
 ```java
 @RejectNull
 public class Foo { ... }
 ```
 
-#Quick Start(Without AspectJ)
+###With Guice
 Class with 0-argument constructor
 ```java
 Foo foo = NullProof.of(Foo.class);
@@ -49,10 +50,11 @@ foo.bar(null); // throws NullPointerException
 ```
 
 #Feature
-Support both runtime Guice AOP and AspectJ.
-The only difference is that AspectJ works only on the class annotated with @RejectNull.
+Both runtime Guice AOP and AspectJ are supported.
+
+The only difference shows in following codes:
 ```java
-Foo foo1 = NullProof.of(Foo.class); // Works even there is no @RejectNull on the class.
+Foo foo1 = NullProof.of(Foo.class); // Works even there is no @RejectNull found on the class.
 Foo foo2 = new Foo(); // Works only if there is @RejectNull annotated on the class (and of course you have to compile it with AspectJ).
 ```
 
@@ -78,12 +80,12 @@ Annotation-Driven configuration:
 
 Descriptive default error message, the original line number is kept:
 ```java
-java.lang.NullPointerException: Parameter<String> can't be null
+java.lang.NullPointerException: Parameter<String> is not nullable
 	at com.github.wnameless.nullproof.Foo.bar(Foo.java:16)
         ...
 ```
 
-#Best Practice
+#Best Practice without AspectJ
 Using NullProof with static factory pattern to ensure every instance is prevented from null arguments.
 ```java
 public Foo { // Non-final class is required
