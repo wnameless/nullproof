@@ -101,7 +101,8 @@ public class NullProofTest {
       foo.barString(null);
       fail();
     } catch (NullPointerException ex) {
-      assertTrue(ex.getMessage().startsWith("Parameter<String> can't be null"));
+      assertTrue(ex.getMessage()
+          .startsWith("Parameter<String> is not nullable"));
     }
   }
 
