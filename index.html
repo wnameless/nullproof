@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Nullproof by wnameless</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Nullproof</h1>
+        <h2>A Java null arguments proofed object constructor by Guice AOP or AspectJ</h2>
+        <a href="https://github.com/wnameless/nullproof" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="nullproof" class="anchor" href="#nullproof"><span class="octicon octicon-link"></span></a>nullproof</h1>
+
+<p>A Java null arguments proofed object constructor by Guice AOP or AspectJ</p>
+
+<h2>
+<a name="purpose" class="anchor" href="#purpose"><span class="octicon octicon-link"></span></a>Purpose</h2>
+
+<p>If you have a Class which conatains 20 methods and each method takes 2 arguments,
+you probably need to repeat following line of code 40 times!!</p>
+
+<div class="highlight highlight-java"><pre><span class="k">if</span><span class="o">(</span><span class="n">arg</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">NullPointerException</span><span class="o">(</span><span class="s">"Your error message"</span><span class="o">);</span>
+</pre></div>
+
+<p>With NullProof, you don't need to do it anymore.</p>
+
+<h1>
+<a name="maven-repo" class="anchor" href="#maven-repo"><span class="octicon octicon-link"></span></a>Maven Repo</h1>
+
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.github.wnameless<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>nullproof<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.2.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<p>AspectJ is supported since v0.2.0.</p>
+
+<h1>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h1>
+
+<h3>
+<a name="with-aspectj" class="anchor" href="#with-aspectj"><span class="octicon octicon-link"></span></a>With AspectJ</h3>
+
+<div class="highlight highlight-java"><pre><span class="nd">@RejectNull</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Foo</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</pre></div>
+
+<h3>
+<a name="with-guice" class="anchor" href="#with-guice"><span class="octicon octicon-link"></span></a>With Guice</h3>
+
+<p>Class with 0-argument constructor</p>
+
+<div class="highlight highlight-java"><pre><span class="n">Foo</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">NullProof</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">foo</span><span class="o">.</span><span class="na">bar</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span> <span class="c1">// throws NullPointerException</span>
+</pre></div>
+
+<p>Class with single implementation arguments constructor</p>
+
+<div class="highlight highlight-java"><pre><span class="n">Foo</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">NullProof</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">123</span><span class="o">,</span> <span class="s">"abc"</span><span class="o">);</span>
+<span class="n">foo</span><span class="o">.</span><span class="na">bar</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span> <span class="c1">// throws NullPointerException</span>
+</pre></div>
+
+<p>Class with generic and upcasting arguments constructor</p>
+
+<div class="highlight highlight-java"><pre><span class="n">Foo</span> <span class="n">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NullProof</span><span class="o">.</span><span class="na">Constructor</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">forType</span><span class="o">(</span><span class="k">new</span> <span class="n">TypeLiteral</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;()</span> <span class="o">{})</span>
+        <span class="o">.</span><span class="na">addArgument</span><span class="o">(</span><span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()).</span><span class="na">create</span><span class="o">();</span>
+<span class="n">foo</span><span class="o">.</span><span class="na">bar</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span> <span class="c1">// throws NullPointerException</span>
+</pre></div>
+
+<h1>
+<a name="feature" class="anchor" href="#feature"><span class="octicon octicon-link"></span></a>Feature</h1>
+
+<p>Both runtime Guice AOP and AspectJ are supported.</p>
+
+<p>The only difference shows in following codes:</p>
+
+<div class="highlight highlight-java"><pre><span class="n">Foo</span> <span class="n">foo1</span> <span class="o">=</span> <span class="n">NullProof</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">// Works even there is no @RejectNull found on the class.</span>
+<span class="n">Foo</span> <span class="n">foo2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Foo</span><span class="o">();</span> <span class="c1">// Works only if there is @RejectNull annotated on the class (and of course you have to compile it with AspectJ).</span>
+</pre></div>
+
+<p>Annotation-Driven configuration:</p>
+
+<div class="highlight highlight-java"><pre><span class="nd">@RejectNull</span> <span class="c1">// On Type or Method.</span>
+<span class="nd">@Argument</span>   <span class="c1">// Can only used within RejectNull</span>
+<span class="nd">@AcceptNull</span> <span class="c1">// On Type or Method.</span>
+</pre></div>
+
+<p>@RejectNull can be used to set up the default behavior of NullProof.</p>
+
+<div class="highlight highlight-java"><pre><span class="nd">@RejectNull</span><span class="o">({</span>
+    <span class="nd">@Argument</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"Oop!"</span><span class="o">),</span>
+    <span class="nd">@Argument</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">ignore</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span> <span class="o">})</span>
+</pre></div>
+
+<p>@AcceptNull can be used to ignore certain methods.</p>
+
+<div class="highlight highlight-java"><pre><span class="nd">@AcceptNull</span><span class="o">({</span> <span class="s">"bar1"</span><span class="o">,</span> <span class="s">"bar2"</span> <span class="o">})</span> <span class="c1">// Works on Type</span>
+<span class="nd">@AcceptNull</span> <span class="c1">// Works on Method</span>
+</pre></div>
+
+<p>Descriptive default error message, the original line number is kept:</p>
+
+<div class="highlight highlight-java"><pre><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">NullPointerException</span><span class="o">:</span> <span class="n">Parameter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">is</span> <span class="n">not</span> <span class="n">nullable</span>
+    <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">wnameless</span><span class="o">.</span><span class="na">nullproof</span><span class="o">.</span><span class="na">Foo</span><span class="o">.</span><span class="na">bar</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">16</span><span class="o">)</span>
+        <span class="o">...</span>
+</pre></div>
+
+<h1>
+<a name="best-practice-without-aspectj" class="anchor" href="#best-practice-without-aspectj"><span class="octicon octicon-link"></span></a>Best Practice without AspectJ</h1>
+
+<p>Using NullProof with static factory pattern to ensure every instance is prevented from null arguments.</p>
+
+<div class="highlight highlight-java"><pre><span class="kd">public</span> <span class="n">Foo</span> <span class="o">{</span> <span class="c1">// Non-final class is required</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Foo</span> <span class="nf">create</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">NullProof</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="n">Foo</span> <span class="o">()</span> <span class="o">{}</span> <span class="c1">// At least 1 package-private(non-private) constuctor is required to let Guice do the AOP</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/wnameless/nullproof/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/wnameless/nullproof/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/wnameless/nullproof"></a> is maintained by <a href="https://github.com/wnameless">wnameless</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
