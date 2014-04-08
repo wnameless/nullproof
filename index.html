@@ -51,7 +51,7 @@ you probably need to repeat following line of code 40 times!!</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.wnameless<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>nullproof<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>0.2.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.3.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
@@ -95,11 +95,14 @@ you probably need to repeat following line of code 40 times!!</p>
 
 <p>Both runtime Guice AOP and AspectJ are supported.</p>
 
-<p>The only difference shows in following codes:</p>
+<p>The first difference shows in following codes:</p>
 
 <div class="highlight highlight-java"><pre><span class="n">Foo</span> <span class="n">foo1</span> <span class="o">=</span> <span class="n">NullProof</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">// Works even there is no @RejectNull found on the class.</span>
 <span class="n">Foo</span> <span class="n">foo2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Foo</span><span class="o">();</span> <span class="c1">// Works only if there is @RejectNull annotated on the class (and of course you have to compile it with AspectJ).</span>
 </pre></div>
+
+<p>The second difference is that AspectJ blocks null arguments of constructors(since v0.3.0),
+but Guice simply not allows null arguments to bind with constructors.</p>
 
 <p>Annotation-Driven configuration:</p>
 
@@ -129,7 +132,7 @@ you probably need to repeat following line of code 40 times!!</p>
 </pre></div>
 
 <h1>
-<a name="best-practice-without-aspectj" class="anchor" href="#best-practice-without-aspectj"><span class="octicon octicon-link"></span></a>Best Practice without AspectJ</h1>
+<a name="best-practice-with-guice" class="anchor" href="#best-practice-with-guice"><span class="octicon octicon-link"></span></a>Best Practice with Guice</h1>
 
 <p>Using NullProof with static factory pattern to ensure every instance is prevented from null arguments.</p>
 
