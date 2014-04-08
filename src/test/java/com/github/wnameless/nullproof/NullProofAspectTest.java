@@ -3,6 +3,8 @@ package com.github.wnameless.nullproof;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,6 +29,46 @@ public class NullProofAspectTest {
   @Test(expected = NullPointerException.class)
   public void testConstuctorWithNullArgument() {
     new Foo((String) null);
+  }
+
+  @Test
+  public void testClassRNMessage() {
+    try {
+      new AnnotatedConstructorFoo((String) null);
+      fail();
+    } catch (NullPointerException ex) {
+      assertTrue(ex.getMessage().startsWith("Wow!"));
+    }
+  }
+
+  @Test
+  public void testClassRNIgnore() {
+    new AnnotatedConstructorFoo((Integer) null);
+  }
+
+  @Test
+  public void testLocalRNMessage() {
+    try {
+      new AnnotatedConstructorFoo((Double) null);
+      fail();
+    } catch (NullPointerException ex) {
+      assertTrue(ex.getMessage().startsWith("Yay!"));
+    }
+  }
+
+  @Test
+  public void testLocalRNIgnore() {
+    new AnnotatedConstructorFoo((Float) null);
+  }
+
+  @Test
+  public void testLocalAN() {
+    new AnnotatedConstructorFoo((Date) null);
+  }
+
+  @Test
+  public void testAcceptNullOnConstructor() {
+    new AcceptNullOnConstructorFoo(null);
   }
 
   @Test

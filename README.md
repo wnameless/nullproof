@@ -16,7 +16,7 @@ With NullProof, you don't need to do it anymore.
 <dependency>
     <groupId>com.github.wnameless</groupId>
     <artifactId>nullproof</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 AspectJ is supported since v0.2.0.
@@ -52,11 +52,13 @@ foo.bar(null); // throws NullPointerException
 #Feature
 Both runtime Guice AOP and AspectJ are supported.
 
-The only difference shows in following codes:
+The first difference shows in following codes:
 ```java
 Foo foo1 = NullProof.of(Foo.class); // Works even there is no @RejectNull found on the class.
 Foo foo2 = new Foo(); // Works only if there is @RejectNull annotated on the class (and of course you have to compile it with AspectJ).
 ```
+The second difference is that AspectJ blocks null arguments of constructors(since v0.3.0),
+but Guice simply not allows null arguments to bind with constructors.
 
 Annotation-Driven configuration:
 ```java
@@ -85,7 +87,7 @@ java.lang.NullPointerException: Parameter<String> is not nullable
         ...
 ```
 
-#Best Practice without AspectJ
+#Best Practice with Guice
 Using NullProof with static factory pattern to ensure every instance is prevented from null arguments.
 ```java
 public Foo { // Non-final class is required

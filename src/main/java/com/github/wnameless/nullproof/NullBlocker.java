@@ -55,6 +55,17 @@ public final class NullBlocker implements MethodInterceptor {
     return invocation.proceed();
   }
 
+  /**
+   * Throws NullPointerException if any null argument of given Constructor is
+   * detected.
+   * 
+   * @param ct
+   *          any Constructor
+   * @param args
+   *          arguments of the Constructor
+   * @throws NullPointerException
+   *           if any null argument is detected
+   */
   public static void blockNulls(Constructor<?> ct, Object[] args) {
     Class<?> klass = ct.getDeclaringClass();
 

@@ -4,3 +4,6 @@ Version 0.1.0
 Version 0.2.0
 + Added support to AspectJ
 * Changed default error message
+
+Version 0.3.0
++ Blocked null arguments for constructor with AspectJ
