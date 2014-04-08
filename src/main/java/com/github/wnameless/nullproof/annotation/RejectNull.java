@@ -20,6 +20,7 @@
  */
 package com.github.wnameless.nullproof.annotation;
 
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -37,10 +38,10 @@ import com.github.wnameless.nullproof.NullProof;
  * {@link NullProof#of} or
  * {@link com.github.wnameless.nullproof.NullProof.Constructor
  * NullProof.Constructor} for AOP purpose.
- *
+ * 
  */
 @Retention(RUNTIME)
-@Target({ TYPE, METHOD })
+@Target({ TYPE, CONSTRUCTOR, METHOD })
 public @interface RejectNull {
 
   /**

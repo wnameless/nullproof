@@ -24,6 +24,11 @@ public class NullProofAspectTest {
     new NotAnnotatedFoo().bar(null);
   }
 
+  @Test(expected = NullPointerException.class)
+  public void testConstuctorWithNullArgument() {
+    new Foo((String) null);
+  }
+
   @Test
   public void testNormalException() {
     try {

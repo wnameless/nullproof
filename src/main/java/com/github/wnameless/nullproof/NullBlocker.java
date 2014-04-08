@@ -20,10 +20,13 @@
  */
 package com.github.wnameless.nullproof;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtMethod;
 import javassist.NotFoundException;
 
@@ -52,6 +55,26 @@ public final class NullBlocker implements MethodInterceptor {
     return invocation.proceed();
   }
 
+  public static void blockNulls(Constructor<?> ct, Object[] args) {
+    Class<?> klass = ct.getDeclaringClass();
+
+    AcceptNull methodAN = ct.getAnnotation(AcceptNull.class);
+    if (methodAN != null)
+      return;
+
+    RejectNull methodRN = ct.getAnnotation(RejectNull.class);
+    if (methodRN != null) {
+      preventNulls(ct, ct.getParameterTypes(), args, methodRN.value());
+      return;
+    }
+
+    AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
+    RejectNull classRN = klass.getAnnotation(RejectNull.class);
+    if (classAN == null || notFoundIn(classAN.value(), ct.getName()))
+      preventNulls(ct, ct.getParameterTypes(), args, classRN == null
+          ? emptyArgAnnotAry : classRN.value());
+  }
+
   /**
    * Throws NullPointerException if any null argument of given Method is
    * detected.
@@ -78,44 +101,19 @@ public final class NullBlocker implements MethodInterceptor {
 
     RejectNull methodRN = m.getAnnotation(RejectNull.class);
     if (methodRN != null) {
-      preventNulls(m, args, methodRN.value());
+      preventNulls(m, m.getParameterTypes(), args, methodRN.value());
       return;
     }
 
     AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
     RejectNull classRN = klass.getAnnotation(RejectNull.class);
     if (classAN == null || notFoundIn(classAN.value(), m.getName()))
-      preventNulls(m, args,
-          classRN == null ? emptyArgAnnotAry : classRN.value());
-
-    return;
+      preventNulls(m, m.getParameterTypes(), args, classRN == null
+          ? emptyArgAnnotAry : classRN.value());
   }
 
-  private static String buildSuffix(Method m) {
-    Class<?>[] argTypes = m.getParameterTypes();
-    Class<?> klass = m.getDeclaringClass();
-
-    ClassPool pool = ClassPool.getDefault();
-    int lineNum = 1;
-    CtMethod method;
-    try {
-      CtClass cc = pool.get(klass.getName());
-      CtClass[] ctClasses = new CtClass[argTypes.length];
-      for (int i = 0; i < ctClasses.length; i++) {
-        ctClasses[i] = pool.get(argTypes[i].getName());
-      }
-      method = cc.getDeclaredMethod(m.getName(), ctClasses);
-      lineNum = method.getMethodInfo().getLineNumber(0) - 1;
-    } catch (NotFoundException e) {}
-
-    return "\n\tat " + klass.getName() + "." + m.getName() + "("
-        + klass.getSimpleName() + ".java:" + lineNum + ")";
-  }
-
-  private static void
-      preventNulls(Method m, Object[] args, Argument[] arguments) {
-    Class<?>[] argTypes = m.getParameterTypes();
-
+  private static void preventNulls(Member m, Class<?>[] argTypes,
+      Object[] args, Argument[] arguments) {
     for (int i = 0; i < argTypes.length; i++) {
       Object arg = args[i];
       Class<?> type = argTypes[i];
@@ -124,11 +122,41 @@ public final class NullBlocker implements MethodInterceptor {
         continue;
       else if (errorType == REGULAR_ERROR)
         throw new NullPointerException("Parameter<" + type.getSimpleName()
-            + "> is not nullable" + buildSuffix(m));
+            + "> is not nullable" + buildSuffix(m, argTypes));
       else
         throw new NullPointerException(arguments[errorType].message()
-            + buildSuffix(m));
+            + buildSuffix(m, argTypes));
     }
+  }
+
+  private static String buildSuffix(Member m, Class<?>[] argTypes) {
+    Class<?> klass = m.getDeclaringClass();
+
+    ClassPool pool = ClassPool.getDefault();
+    int lineNum = 1;
+    CtConstructor constructor;
+    CtMethod method;
+    try {
+      CtClass cc = pool.get(klass.getName());
+      CtClass[] ctClasses = new CtClass[argTypes.length];
+      for (int i = 0; i < ctClasses.length; i++) {
+        ctClasses[i] = pool.get(argTypes[i].getName());
+      }
+      if (m instanceof Constructor) {
+        constructor = cc.getDeclaredConstructor(ctClasses);
+        lineNum = constructor.getMethodInfo().getLineNumber(0);
+      } else {
+        method = cc.getDeclaredMethod(m.getName(), ctClasses);
+        lineNum = method.getMethodInfo().getLineNumber(0) - 1;
+      }
+    } catch (NotFoundException e) {}
+
+    if (m instanceof Constructor)
+      return "\n\tat " + klass.getName() + "." + klass.getSimpleName() + "("
+          + klass.getSimpleName() + ".java:" + lineNum + ")";
+    else
+      return "\n\tat " + klass.getName() + "." + m.getName() + "("
+          + klass.getSimpleName() + ".java:" + lineNum + ")";
   }
 
   private static boolean notFoundIn(String[] nullables, String methodName) {
