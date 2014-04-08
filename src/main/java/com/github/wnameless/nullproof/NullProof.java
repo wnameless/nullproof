@@ -32,7 +32,7 @@ import com.google.inject.TypeLiteral;
  * {@link NullProof} protects any Object from null arguments. After the
  * enhancement, a NullPointerException will raise automatically if any null
  * argument is detected.
- *
+ * 
  */
 public final class NullProof {
 
@@ -51,7 +51,7 @@ public final class NullProof {
    *     .forType(new TypeLiteral&lt;Map&lt;String, Integer&gt;&gt;() {})
    *     .addArgument(new HashMap&lt;String, Integer&gt;()).make();
    * </pre>
-   *
+   * 
    * @param <E>
    *          type of target Class
    */
@@ -114,6 +114,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          any non-final Class with non-private and zero-argument constructor
    * @return a nullproof instance of given Class
@@ -127,6 +129,8 @@ public final class NullProof {
    * throwing NullPointerException from method calls. This method handles
    * complex generic and upcasting arguments of constructor.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param types
@@ -162,6 +166,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param b
@@ -190,6 +196,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param b
@@ -205,6 +213,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param s
@@ -234,6 +244,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param s
@@ -249,6 +261,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param i
@@ -277,6 +291,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param i
@@ -292,6 +308,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param l
@@ -320,6 +338,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param l
@@ -335,6 +355,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param f
@@ -364,6 +386,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param f
@@ -379,6 +403,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param d
@@ -408,6 +434,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param d
@@ -423,6 +451,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param b
@@ -452,6 +482,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param b
@@ -467,6 +499,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param c
@@ -495,6 +529,8 @@ public final class NullProof {
    * Returns an instance of given Class which is prevented null arguments by
    * throwing NullPointerException from method calls.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param c
@@ -511,6 +547,8 @@ public final class NullProof {
    * throwing NullPointerException from method calls. This method only handles
    * normal arguments of constructor without generic and upcasting.
    * 
+   * @param <E>
+   *          the type of target Class
    * @param klass
    *          Class of target object
    * @param args
