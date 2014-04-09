@@ -16,7 +16,7 @@ With NullProof, you don't need to do it anymore.
 <dependency>
     <groupId>com.github.wnameless</groupId>
     <artifactId>nullproof</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
 </dependency>
 ```
 AspectJ is supported since v0.2.0.
@@ -98,4 +98,13 @@ public Foo { // Non-final class is required
     Foo () {} // At least 1 package-private(non-private) constuctor is required to let Guice do the AOP
     ...
 }
+```
+
+#Tip for AspectJ
+If you are using aspectj-maven-plugin and the [aspectLibraries] property is not working properly.
+Try to create a java file with following content in your project.
+It may solve the issue for you.
+```java
+@Aspect
+public class NullProofAspect extends AbstractNullProofAspect {}
 ```
