@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import com.google.common.testing.NullPointerTester;
 
@@ -40,17 +41,17 @@ public class NullProofAspectTest {
     annFoo1 = new AnnotatedFoo1();
   }
 
-  // @Test
+  @Test
   public void aspectJIsNotWorkingWithoutRejectNullAnnotation() {
     new NotAnnotatedFoo().bar(null);
   }
 
-  // @Test(expected = NullPointerException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstuctorWithNullArgument() {
     new Foo((String) null);
   }
 
-  // @Test
+  @Test
   public void testClassRNMessage() {
     try {
       new AnnotatedConstructorFoo((String) null);
@@ -60,12 +61,12 @@ public class NullProofAspectTest {
     }
   }
 
-  // @Test
+  @Test
   public void testClassRNIgnore() {
     new AnnotatedConstructorFoo((Integer) null);
   }
 
-  // @Test
+  @Test
   public void testLocalRNMessage() {
     try {
       new AnnotatedConstructorFoo((Double) null);
@@ -75,22 +76,22 @@ public class NullProofAspectTest {
     }
   }
 
-  // @Test
+  @Test
   public void testLocalRNIgnore() {
     new AnnotatedConstructorFoo((Float) null);
   }
 
-  // @Test
+  @Test
   public void testLocalAN() {
     new AnnotatedConstructorFoo((Date) null);
   }
 
-  // @Test
+  @Test
   public void testAcceptNullOnConstructor() {
     new AcceptNullOnConstructorFoo(null);
   }
 
-  // @Test
+  @Test
   public void testNormalException() {
     try {
       foo.barString(null);
@@ -101,29 +102,29 @@ public class NullProofAspectTest {
     }
   }
 
-  // @Test
+  @Test
   public void testEqulasWithNull() {
     foo.equals((Object) null);
   }
 
-  // @Test(expected = NullPointerException.class)
+  @Test(expected = NullPointerException.class)
   public void testOverloadedEqulasWithNull() {
     foo.equals((Integer) null);
   }
 
-  // @Test
+  @Test
   public void nullProofIsNotAffectPrivateMethods() {
     foo.barString("");
   }
 
-  // @Test
+  @Test
   public void allPublicMethodNPETest() throws Exception {
     new NullPointerTester().ignore(
         foo.getClass().getMethod("equals", Object.class))
         .testAllPublicInstanceMethods(foo);
   }
 
-  // @Test
+  @Test
   public void globalRejectNullExceptionMessageTest() {
     try {
       annFoo1.barString(null);
@@ -133,32 +134,32 @@ public class NullProofAspectTest {
     }
   }
 
-  // @Test
+  @Test
   public void globalRejectNullIngoreTest() {
     annFoo1.barInteger(null);
   }
 
-  // @Test
+  @Test
   public void globalAccectNullIngoreTest() {
     annFoo1.barDouble(null);
   }
 
-  // @Test
+  @Test
   public void localAccectNullIngoreTest() {
     annFoo1.barByte(null);
   }
 
-  // @Test(expected = NullPointerException.class)
+  @Test(expected = NullPointerException.class)
   public void normalRejectNullTest() {
     annFoo1.barFloat(null);
   }
 
-  // @Test
+  @Test
   public void localRejectNullIngoreTest() {
     annFoo1.barLong(null);
   }
 
-  // @Test
+  @Test
   public void localRejectNullExceptionMessageTest() {
     try {
       annFoo1.barNumber(null);
@@ -168,23 +169,23 @@ public class NullProofAspectTest {
     }
   }
 
-  // @Test(expected = NullPointerException.class)
+  @Test(expected = NullPointerException.class)
   public void localRejectNullOverrideTest() {
     annFoo1.barInteger2(null);
   }
 
-  // @Test
+  @Test
   public void acceptNullIsHigherThanRejectNullTest() {
     annFoo1.barDate(null);
   }
 
-  // @Test(expected = NullPointerException.class)
+  @Test(expected = NullPointerException.class)
   public void testRejectNullWithoutAcceptNullOnClass() {
     AnnotatedFoo2 annFoo2 = new AnnotatedFoo2();
     annFoo2.barFloat(null);
   }
 
-  // @Test
+  @Test
   public void testOnlyAcceptNullOnClass() {
     AnnotatedFoo3 annFoo3 = new AnnotatedFoo3();
     annFoo3.barInteger(null);
