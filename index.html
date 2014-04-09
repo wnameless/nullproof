@@ -51,7 +51,7 @@ you probably need to repeat following line of code 40 times!!</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.wnameless<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>nullproof<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>0.3.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.3.1<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
@@ -144,6 +144,17 @@ but Guice simply not allows null arguments to bind with constructors.</p>
     <span class="n">Foo</span> <span class="o">()</span> <span class="o">{}</span> <span class="c1">// At least 1 package-private(non-private) constuctor is required to let Guice do the AOP</span>
     <span class="o">...</span>
 <span class="o">}</span>
+</pre></div>
+
+<h1>
+<a name="tip-for-aspectj" class="anchor" href="#tip-for-aspectj"><span class="octicon octicon-link"></span></a>Tip for AspectJ</h1>
+
+<p>If you are using aspectj-maven-plugin and the [aspectLibraries] property is not working properly.
+Try to create a java file with following content in your project.
+It may solve the issue for you.</p>
+
+<div class="highlight highlight-java"><pre><span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NullProofAspect</span> <span class="kd">extends</span> <span class="n">AbstractNullProofAspect</span> <span class="o">{}</span>
 </pre></div>
         </section>
 
