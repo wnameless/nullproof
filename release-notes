@@ -7,3 +7,9 @@ Version 0.2.0
 
 Version 0.3.0
 + Blocked null arguments for constructor with AspectJ
+
+Version 0.3.1
++ Added AbstractNullProofAspect class
+
+Version 0.3.2
+* Upgraded JavaAssist
