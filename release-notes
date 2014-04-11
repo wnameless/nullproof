@@ -17,3 +17,6 @@ Version 0.3.2
 Version 0.4.0
 * Bug Fix: AspectJ didn't add advice to constructors of AccepNull annotated class
 * Improved code efficiency
+
+Version 0.4.1
+* Bug Fix: Error raised when executing a constructor of inner class

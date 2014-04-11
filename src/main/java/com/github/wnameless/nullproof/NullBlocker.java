@@ -82,7 +82,8 @@ public final class NullBlocker implements MethodInterceptor {
     if (classAN == null
         || notFoundIn(classAN.value(),
             ct.getName().substring(ct.getName().lastIndexOf('.') + 1)))
-      preventNulls(ct, ct.getParameterTypes(), args, classRN.value());
+      preventNulls(ct, ct.getParameterTypes(), args, classRN == null
+          ? emptyArgAnnotAry : classRN.value());
   }
 
   /**

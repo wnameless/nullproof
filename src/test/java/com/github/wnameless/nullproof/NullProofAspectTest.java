@@ -247,4 +247,9 @@ public class NullProofAspectTest {
     new AnnotatedFoo6((Float) null);
   }
 
+  // @Test
+  public void testOnInnerClass() {
+    new InnerClassFoo();
+  }
+
 }
