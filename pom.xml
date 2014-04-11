@@ -9,7 +9,7 @@
 
 	<groupId>com.github.wnameless</groupId>
 	<artifactId>nullproof</artifactId>
-	<version>0.3.2</version>
+	<version>0.3.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>nullproof</name>
