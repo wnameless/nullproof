@@ -70,10 +70,6 @@ public final class NullBlocker implements MethodInterceptor {
     if (args.length == 0)
       return;
 
-    AcceptNull methodAN = ct.getAnnotation(AcceptNull.class);
-    if (methodAN != null)
-      return;
-
     RejectNull methodRN = ct.getAnnotation(RejectNull.class);
     if (methodRN != null) {
       preventNulls(ct, ct.getParameterTypes(), args, methodRN.value());

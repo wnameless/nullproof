@@ -14,5 +14,6 @@ Version 0.3.1
 Version 0.3.2
 * Upgraded JavaAssist
 
-Version 0.3.3
-* Bug Fix: While AccepNull annotated on Class, AspectJ won't add advice to constructors
+Version 0.4.0
+* Bug Fix: AspectJ didn't add advice to constructors of AccepNull annotated class
+* Improved code efficiency

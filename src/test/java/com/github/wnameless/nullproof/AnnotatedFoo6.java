@@ -26,13 +26,16 @@ import com.github.wnameless.nullproof.annotation.AcceptNull;
 import com.github.wnameless.nullproof.annotation.RejectNull;
 
 @RejectNull
-@AcceptNull("haha")
+@AcceptNull("bar2")
 public class AnnotatedFoo6 {
 
   public AnnotatedFoo6(String s) {}
 
-  public void bar(Integer i, Double d) {}
+  @AcceptNull
+  public AnnotatedFoo6(Float f) {}
 
-  public void haha(Date d) {}
+  public void bar1(Integer i, Double d) {}
+
+  public void bar2(Date d) {}
 
 }
