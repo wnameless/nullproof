@@ -20,10 +20,19 @@
  */
 package com.github.wnameless.nullproof;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import java.util.Date;
 
-@RunWith(Suite.class)
-@SuiteClasses({ NullProofAspectTest.class, NullProofTest.class })
-public class AllTests {}
+import com.github.wnameless.nullproof.annotation.AcceptNull;
+import com.github.wnameless.nullproof.annotation.RejectNull;
+
+@RejectNull
+@AcceptNull("haha")
+public class AnnotatedFoo6 {
+
+  public AnnotatedFoo6(String s) {}
+
+  public void bar(Integer i, Double d) {}
+
+  public void haha(Date d) {}
+
+}

@@ -24,9 +24,9 @@ import com.github.wnameless.nullproof.annotation.AcceptNull;
 import com.github.wnameless.nullproof.annotation.RejectNull;
 
 @RejectNull
-@AcceptNull("AcceptNullOnConstructorFoo")
-public class AcceptNullOnConstructorFoo {
+@AcceptNull("AnnotatedFoo4")
+public class AnnotatedFoo4 {
 
-  public AcceptNullOnConstructorFoo(String s) {}
+  public AnnotatedFoo4(String s) {}
 
 }

@@ -33,20 +33,16 @@ import com.github.wnameless.nullproof.NullBlocker;
 public abstract class AbstractNullProofAspect {
 
   @Pointcut("within(@com.github.wnameless.nullproof.annotation.RejectNull *)")
-  public void beanAnnotatedWithAtRejectNull() {}
+  public void classAnnotatedWithRejectNull() {}
 
   @Pointcut("execution(*.new(..))")
   public void constructor() {}
 
-  @Pointcut("execution((@com.github.wnameless.nullproof.annotation.AcceptNull *).new(..))")
+  @Pointcut("classAnnotatedWithRejectNull() && constructor() && !@annotation(com.github.wnameless.nullproof.annotation.AcceptNull)")
   public
-      void constructorAnnotatedWithAtAcceptNull() {}
+      void constructorOfRejectNullAnnotatedClassWithoutAcceptNull() {}
 
-  @Pointcut("beanAnnotatedWithAtRejectNull() && constructor() && !constructorAnnotatedWithAtAcceptNull()")
-  public
-      void constructorInsideAClassMarkedWithAtRejectNull() {}
-
-  @Before("constructorInsideAClassMarkedWithAtRejectNull()")
+  @Before("constructorOfRejectNullAnnotatedClassWithoutAcceptNull()")
   public void rejectNullForConsructors(JoinPoint jointPoint) {
     ConstructorSignature sig = (ConstructorSignature) jointPoint.getSignature();
     NullBlocker.blockNulls(sig.getConstructor(), jointPoint.getArgs());
@@ -58,12 +54,12 @@ public abstract class AbstractNullProofAspect {
   @Pointcut("execution(public boolean equals(Object))")
   public void equalsMethod() {}
 
-  @Pointcut("beanAnnotatedWithAtRejectNull() && publicMethod() && !equalsMethod() "
+  @Pointcut("classAnnotatedWithRejectNull() && publicMethod() && !equalsMethod() "
       + "&& !@annotation(com.github.wnameless.nullproof.annotation.AcceptNull)")
   public
-      void publicMethodWithoutAtAcceptNullInsideAClassWithAtRejectNull() {}
+      void publicMethodOfRejectNullAnnotatedClassWithoutAcceptNull() {}
 
-  @Before("publicMethodWithoutAtAcceptNullInsideAClassWithAtRejectNull()")
+  @Before("publicMethodOfRejectNullAnnotatedClassWithoutAcceptNull()")
   public void rejectNullForPublicMethods(JoinPoint jointPoint) {
     MethodSignature sig = (MethodSignature) jointPoint.getSignature();
     NullBlocker.blockNulls(sig.getMethod(), jointPoint.getArgs());

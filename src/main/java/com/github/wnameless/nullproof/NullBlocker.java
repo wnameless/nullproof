@@ -67,7 +67,8 @@ public final class NullBlocker implements MethodInterceptor {
    *           if any null argument is detected
    */
   public static void blockNulls(Constructor<?> ct, Object[] args) {
-    Class<?> klass = ct.getDeclaringClass();
+    if (args.length == 0)
+      return;
 
     AcceptNull methodAN = ct.getAnnotation(AcceptNull.class);
     if (methodAN != null)
@@ -79,11 +80,13 @@ public final class NullBlocker implements MethodInterceptor {
       return;
     }
 
+    Class<?> klass = ct.getDeclaringClass();
     AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
     RejectNull classRN = klass.getAnnotation(RejectNull.class);
-    if (classAN == null || notFoundIn(classAN.value(), ct.getName()))
-      preventNulls(ct, ct.getParameterTypes(), args, classRN == null
-          ? emptyArgAnnotAry : classRN.value());
+    if (classAN == null
+        || notFoundIn(classAN.value(),
+            ct.getName().substring(ct.getName().lastIndexOf('.') + 1)))
+      preventNulls(ct, ct.getParameterTypes(), args, classRN.value());
   }
 
   /**
@@ -98,13 +101,14 @@ public final class NullBlocker implements MethodInterceptor {
    *           if any null argument is detected
    */
   public static void blockNulls(Method m, Object[] args) {
-    Class<?> klass = m.getDeclaringClass();
-    Class<?>[] argTypes = m.getParameterTypes();
+    if (args.length == 0)
+      return;
 
     // Object#equals is always ignored
-    if (argTypes.length == 1 && m.getName().equals("equals")
-        && Object.class.equals(argTypes[0]))
-      return;
+    if (m.getName().equals("equals") && args.length == 1) {
+      if (Object.class.equals(m.getParameterTypes()[0]))
+        return;
+    }
 
     AcceptNull methodAN = m.getAnnotation(AcceptNull.class);
     if (methodAN != null)
@@ -116,6 +120,7 @@ public final class NullBlocker implements MethodInterceptor {
       return;
     }
 
+    Class<?> klass = m.getDeclaringClass();
     AcceptNull classAN = klass.getAnnotation(AcceptNull.class);
     RejectNull classRN = klass.getAnnotation(RejectNull.class);
     if (classAN == null || notFoundIn(classAN.value(), m.getName()))
