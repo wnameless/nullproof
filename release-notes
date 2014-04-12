@@ -20,3 +20,6 @@ Version 0.4.0
 
 Version 0.4.1
 * Bug Fix: Error raised when executing a constructor of inner class
+
+Version 0.4.2
+* Fixed Maven AspectJ deploy issue
