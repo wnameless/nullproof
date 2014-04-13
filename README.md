@@ -16,7 +16,7 @@ With NullProof, you don't need to do it anymore.
 <dependency>
     <groupId>com.github.wnameless</groupId>
     <artifactId>nullproof</artifactId>
-    <version>0.4.2</version>
+    <version>0.5.0</version>
 </dependency>
 ```
 AspectJ is supported since v0.2.0.
@@ -101,7 +101,9 @@ public Foo { // Non-final class is required
 ```
 
 #Tip for AspectJ
-If you are using aspectj-maven-plugin with Eclipse AJDT. Try to create a java file with following content in your project. It allows AJDT to help you indentify all the AspectJ advice in your source codes during development.
+If you are using aspectj-maven-plugin with Eclipse AJDT.
+Try to create a java file with following content in your project.
+It allows AJDT to help you indentify all the AspectJ advice in your source codes during development.
 ```java
 @Aspect
 public class NullProofAspect extends AbstractNullProofAspect {}
