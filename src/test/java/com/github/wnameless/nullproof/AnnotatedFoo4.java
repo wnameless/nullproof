@@ -27,6 +27,10 @@ import com.github.wnameless.nullproof.annotation.RejectNull;
 @AcceptNull("AnnotatedFoo4")
 public class AnnotatedFoo4 {
 
+  public AnnotatedFoo4() {}
+
   public AnnotatedFoo4(String s) {}
+
+  public void bar() {}
 
 }

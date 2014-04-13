@@ -35,10 +35,14 @@ public abstract class AbstractNullProofAspect {
   @Pointcut("within(@com.github.wnameless.nullproof.annotation.RejectNull *)")
   public void classAnnotatedWithRejectNull() {}
 
+  @Pointcut("args(*, ..)")
+  public void atLeast1Argument() {}
+
   @Pointcut("execution(*.new(..))")
   public void constructor() {}
 
-  @Pointcut("classAnnotatedWithRejectNull() && constructor() && !@annotation(com.github.wnameless.nullproof.annotation.AcceptNull)")
+  @Pointcut("classAnnotatedWithRejectNull() && constructor() && atLeast1Argument() "
+      + "&& !@annotation(com.github.wnameless.nullproof.annotation.AcceptNull)")
   public
       void constructorOfRejectNullAnnotatedClassWithoutAcceptNull() {}
 
@@ -54,7 +58,7 @@ public abstract class AbstractNullProofAspect {
   @Pointcut("execution(public boolean equals(Object))")
   public void equalsMethod() {}
 
-  @Pointcut("classAnnotatedWithRejectNull() && publicMethod() && !equalsMethod() "
+  @Pointcut("classAnnotatedWithRejectNull() && publicMethod() && !equalsMethod() && atLeast1Argument() "
       + "&& !@annotation(com.github.wnameless.nullproof.annotation.AcceptNull)")
   public
       void publicMethodOfRejectNullAnnotatedClassWithoutAcceptNull() {}

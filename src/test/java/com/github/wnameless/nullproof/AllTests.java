@@ -26,4 +26,4 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ NullProofAspectTest.class, NullProofTest.class })
-public class AllNullProofTests {}
+public class AllTests {}
