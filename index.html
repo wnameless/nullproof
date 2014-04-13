@@ -51,7 +51,7 @@ you probably need to repeat following line of code 40 times!!</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.wnameless<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>nullproof<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>0.4.2<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.5.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
@@ -149,7 +149,9 @@ but Guice simply not allows null arguments to bind with constructors.</p>
 <h1>
 <a name="tip-for-aspectj" class="anchor" href="#tip-for-aspectj"><span class="octicon octicon-link"></span></a>Tip for AspectJ</h1>
 
-<p>If you are using aspectj-maven-plugin with Eclipse AJDT. Try to create a java file with following content in your project. It allows AJDT to help you indentify all the AspectJ advice in your source codes during development.</p>
+<p>If you are using aspectj-maven-plugin with Eclipse AJDT.
+Try to create a java file with following content in your project.
+It allows AJDT to help you indentify all the AspectJ advice in your source codes during development.</p>
 
 <div class="highlight highlight-java"><pre><span class="nd">@Aspect</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">NullProofAspect</span> <span class="kd">extends</span> <span class="n">AbstractNullProofAspect</span> <span class="o">{}</span>
