@@ -23,3 +23,6 @@ Version 0.4.1
 
 Version 0.4.2
 * Fixed Maven AspectJ deploy issue
+
+Version 0.5.0
++ Only applied on methods and constructors with at least 1 argument(better performance)
